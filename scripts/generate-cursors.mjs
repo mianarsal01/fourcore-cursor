@@ -7,11 +7,10 @@ const ASSETS_DIR = path.resolve(
   "cursor-extension",
   "assets",
 );
-const SIZES = [
-  { suffix: "@1x", size: 32 },
-  { suffix: "@2x", size: 64 },
-  { suffix: "@3x", size: 96 },
-];
+const SIZES = Array.from({ length: 11 }, (_, index) => {
+  const size = 24 + index * 4;
+  return { suffix: `@${size}`, size };
+});
 
 const isSvg = (file) => file.toLowerCase().endsWith(".svg");
 

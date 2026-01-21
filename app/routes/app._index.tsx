@@ -17,25 +17,26 @@ import { authenticate } from "../shopify.server";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import styles from "../styles/cursor-studio.module.css";
 import prisma from "../db.server";
+import {
+  buildCursorSvg,
+  cursorSvg,
+  iconSvg,
+  CURSOR_TEMPLATES,
+  type AccentType,
+  type IconType,
+} from "../cursor-templates";
 
 type CursorSettings = {
   enabled: boolean;
   preset: string;
   size: number;
-  color: string;
-  outlineColor: string;
-  outlineWidth: number;
-  glow: number;
-  trail: number;
-  clickScale: number;
-  hoverScale: number;
-  blendMode: string;
+  hoverSize: number;
+  defaultColor: string;
+  defaultAccentColor: string;
+  hoverColor: string;
+  hoverAccentColor: string;
   imageUrl: string;
   hoverImageUrl: string;
-  hideNative: boolean;
-  applyTo: string;
-  includeUrls: string;
-  excludeUrls: string;
   disableOnMobile: boolean;
   savedCursors: SavedCursor[];
 };
@@ -47,21 +48,14 @@ type ShopSummary = {
 const DEFAULT_SETTINGS: CursorSettings = {
   enabled: true,
   preset: "cartoon-bag",
-  size: 24,
-  color: "#00f5ff",
-  outlineColor: "#baffff",
-  outlineWidth: 2,
-  glow: 18,
-  trail: 70,
-  clickScale: 0.85,
-  hoverScale: 1.4,
-  blendMode: "normal",
+  size: 32,
+  hoverSize: 48,
+  defaultColor: "#ff7a59",
+  defaultAccentColor: "#ffd166",
+  hoverColor: "#ff4d4d",
+  hoverAccentColor: "#ffe29a",
   imageUrl: "cartoon-bag",
   hoverImageUrl: "cartoon-bag-hover",
-  hideNative: true,
-  applyTo: "all",
-  includeUrls: "",
-  excludeUrls: "",
   disableOnMobile: true,
   savedCursors: [],
 };
@@ -74,6 +68,10 @@ type CursorItem = {
   previewSvg: string;
   previewHoverSvg: string;
   size?: number;
+  defaultColor: string;
+  defaultAccentColor: string;
+  hoverColor: string;
+  hoverAccentColor: string;
 };
 
 type SavedCursor = {
@@ -90,8 +88,17 @@ type CursorCategory = {
   items: CursorItem[];
 };
 
-const cursorSvg = (fill: string, accent: string) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><path d="M12 6l34 26-18 4 8 22-10 4-8-22-16 10z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="44" cy="46" r="6" fill="${accent}"/></svg>`;
+const buildPreviewSvg = (
+  kind: "cursor" | "icon",
+  fill: string,
+  accent: string,
+  accentType?: AccentType,
+  iconType?: IconType,
+) => {
+  const svg =
+    kind === "icon"
+      ? iconSvg(iconType || "cart", fill, accent)
+      : cursorSvg(fill, accent, accentType || "dot");
   return {
     dataUri: `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`,
     markup: svg,
@@ -104,8 +111,22 @@ const CURSOR_LIBRARY: CursorCategory[] = [
     name: "Cartoon",
     items: [
       (() => {
-        const base = cursorSvg("#ff7a59", "#ffd166");
-        const hover = cursorSvg("#ff4d4d", "#ffe29a");
+        const defaultColor = "#ff7a59";
+        const defaultAccentColor = "#ffd166";
+        const hoverColor = "#ff4d4d";
+        const hoverAccentColor = "#ffe29a";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+          "box",
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+          "box-open",
+        );
         return {
           id: "cartoon-bag",
           name: "Bag Pop",
@@ -114,11 +135,29 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#2ec4b6", "#ffbf69");
-        const hover = cursorSvg("#1f9d93", "#ffd6a5");
+        const defaultColor = "#2ec4b6";
+        const defaultAccentColor = "#ffbf69";
+        const hoverColor = "#1f9d93";
+        const hoverAccentColor = "#ffd6a5";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+          "tag",
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+          "tag-percent",
+        );
         return {
           id: "cartoon-sale",
           name: "Sale Tag",
@@ -127,11 +166,29 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#f72585", "#ffcad4");
-        const hover = cursorSvg("#b5179e", "#ffe5ec");
+        const defaultColor = "#f72585";
+        const defaultAccentColor = "#ffcad4";
+        const hoverColor = "#b5179e";
+        const hoverAccentColor = "#ffe5ec";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+          "heart",
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+          "heart-double",
+        );
         return {
           id: "cartoon-heart",
           name: "Wish Heart",
@@ -140,11 +197,29 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#4361ee", "#fca311");
-        const hover = cursorSvg("#3a0ca3", "#ffd166");
+        const defaultColor = "#4361ee";
+        const defaultAccentColor = "#fca311";
+        const hoverColor = "#3a0ca3";
+        const hoverAccentColor = "#ffd166";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+          "box",
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+          "box-open",
+        );
         return {
           id: "cartoon-gift",
           name: "Gift Drop",
@@ -153,11 +228,29 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#52b788", "#d8f3dc");
-        const hover = cursorSvg("#40916c", "#e9f5db");
+        const defaultColor = "#52b788";
+        const defaultAccentColor = "#d8f3dc";
+        const hoverColor = "#40916c";
+        const hoverAccentColor = "#e9f5db";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+          "leaf",
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+          "leaf-spark",
+        );
         return {
           id: "cartoon-green",
           name: "Minty",
@@ -166,11 +259,29 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#ff8fab", "#ffc6ff");
-        const hover = cursorSvg("#ff5d8f", "#ffd6ff");
+        const defaultColor = "#ff8fab";
+        const defaultAccentColor = "#ffc6ff";
+        const hoverColor = "#ff5d8f";
+        const hoverAccentColor = "#ffd6ff";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+          "candy",
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+          "candy-bite",
+        );
         return {
           id: "cartoon-sweet",
           name: "Candy",
@@ -179,6 +290,214 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+    ],
+  },
+  {
+    id: "premium",
+    name: "Premium",
+    items: [
+      (() => {
+        const defaultColor = "#f59e0b";
+        const defaultAccentColor = "#fde68a";
+        const hoverColor = "#d97706";
+        const hoverAccentColor = "#fef3c7";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "cart",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "cart",
+        );
+        return {
+          id: "premium-cart",
+          name: "Golden Cart",
+          imageUrl: "premium-cart",
+          hoverImageUrl: "premium-cart-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#3b82f6";
+        const defaultAccentColor = "#dbeafe";
+        const hoverColor = "#2563eb";
+        const hoverAccentColor = "#bfdbfe";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "tag",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "tag",
+        );
+        return {
+          id: "premium-tag",
+          name: "Price Tag",
+          imageUrl: "premium-tag",
+          hoverImageUrl: "premium-tag-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#ef4444";
+        const defaultAccentColor = "#fecaca";
+        const hoverColor = "#dc2626";
+        const hoverAccentColor = "#fee2e2";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "heart",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "heart",
+        );
+        return {
+          id: "premium-heart",
+          name: "Wishlist",
+          imageUrl: "premium-heart",
+          hoverImageUrl: "premium-heart-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#111827";
+        const defaultAccentColor = "#9ca3af";
+        const hoverColor = "#0f172a";
+        const hoverAccentColor = "#e5e7eb";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "star",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "star",
+        );
+        return {
+          id: "premium-star",
+          name: "Luxe Star",
+          imageUrl: "premium-star",
+          hoverImageUrl: "premium-star-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#22c55e";
+        const defaultAccentColor = "#bbf7d0";
+        const hoverColor = "#16a34a";
+        const hoverAccentColor = "#dcfce7";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "leaf",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "leaf",
+        );
+        return {
+          id: "premium-leaf",
+          name: "Eco Leaf",
+          imageUrl: "premium-leaf",
+          hoverImageUrl: "premium-leaf-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#a855f7";
+        const defaultAccentColor = "#e9d5ff";
+        const hoverColor = "#7c3aed";
+        const hoverAccentColor = "#ddd6fe";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bolt",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "bolt",
+        );
+        return {
+          id: "premium-bolt",
+          name: "Power Bolt",
+          imageUrl: "premium-bolt",
+          hoverImageUrl: "premium-bolt-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
     ],
@@ -188,8 +507,20 @@ const CURSOR_LIBRARY: CursorCategory[] = [
     name: "Commerce",
     items: [
       (() => {
-        const base = cursorSvg("#c9a24b", "#f1e2b6");
-        const hover = cursorSvg("#b4892f", "#f8edc0");
+        const defaultColor = "#c9a24b";
+        const defaultAccentColor = "#f1e2b6";
+        const hoverColor = "#b4892f";
+        const hoverAccentColor = "#f8edc0";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "commerce-luxe",
           name: "Luxe Gild",
@@ -197,12 +528,28 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-luxe-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 22,
+          size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#39c6ff", "#8b5cf6");
-        const hover = cursorSvg("#0ea5e9", "#a78bfa");
+        const defaultColor = "#39c6ff";
+        const defaultAccentColor = "#8b5cf6";
+        const hoverColor = "#0ea5e9";
+        const hoverAccentColor = "#a78bfa";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "commerce-tech",
           name: "Tech Glow",
@@ -210,12 +557,28 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-tech-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 22,
+          size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#0f172a", "#94a3b8");
-        const hover = cursorSvg("#1e293b", "#cbd5f5");
+        const defaultColor = "#0f172a";
+        const defaultAccentColor = "#94a3b8";
+        const hoverColor = "#1e293b";
+        const hoverAccentColor = "#cbd5f5";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "commerce-min",
           name: "Mono Pro",
@@ -223,12 +586,28 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-min-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 22,
+          size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#7aa387", "#e2d6c2");
-        const hover = cursorSvg("#5f8f74", "#efe6d4");
+        const defaultColor = "#7aa387";
+        const defaultAccentColor = "#e2d6c2";
+        const hoverColor = "#5f8f74";
+        const hoverAccentColor = "#efe6d4";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "commerce-organic",
           name: "Earthy",
@@ -236,7 +615,11 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-organic-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 22,
+          size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
     ],
@@ -246,8 +629,20 @@ const CURSOR_LIBRARY: CursorCategory[] = [
     name: "Seasonal",
     items: [
       (() => {
-        const base = cursorSvg("#e11d48", "#fbbf24");
-        const hover = cursorSvg("#be123c", "#fde68a");
+        const defaultColor = "#e11d48";
+        const defaultAccentColor = "#fbbf24";
+        const hoverColor = "#be123c";
+        const hoverAccentColor = "#fde68a";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "season-holiday",
           name: "Holiday Spark",
@@ -256,11 +651,27 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#ff5a3c", "#ffb65c");
-        const hover = cursorSvg("#fb7185", "#fde68a");
+        const defaultColor = "#ff5a3c";
+        const defaultAccentColor = "#ffb65c";
+        const hoverColor = "#fb7185";
+        const hoverAccentColor = "#fde68a";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "season-sun",
           name: "Sunset Pop",
@@ -269,11 +680,27 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
       (() => {
-        const base = cursorSvg("#1d4ed8", "#93c5fd");
-        const hover = cursorSvg("#2563eb", "#bfdbfe");
+        const defaultColor = "#1d4ed8";
+        const defaultAccentColor = "#93c5fd";
+        const hoverColor = "#2563eb";
+        const hoverAccentColor = "#bfdbfe";
+        const base = buildPreviewSvg(
+          "cursor",
+          defaultColor,
+          defaultAccentColor,
+        );
+        const hover = buildPreviewSvg(
+          "cursor",
+          hoverColor,
+          hoverAccentColor,
+        );
         return {
           id: "season-sport",
           name: "Sports Energy",
@@ -282,6 +709,10 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 24,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
         };
       })(),
     ],
@@ -300,6 +731,12 @@ const normalizeSettings = (
   settings?: Partial<CursorSettings> | null,
 ): CursorSettings => {
   const merged = { ...DEFAULT_SETTINGS, ...(settings || {}) };
+  const normalizeHexColor = (value: unknown, fallback: string) => {
+    if (typeof value !== "string") return fallback;
+    const trimmed = value.trim();
+    const normalized = trimmed.startsWith("#") ? trimmed : `#${trimmed}`;
+    return /^#[0-9a-fA-F]{6}$/.test(normalized) ? normalized : fallback;
+  };
   const normalizeImageValue = (value: string | undefined) => {
     if (!value) return "";
     if (value.startsWith("data:image")) return "";
@@ -317,12 +754,26 @@ const normalizeSettings = (
 
   return {
     ...merged,
+    enabled: Boolean(merged.enabled),
+    disableOnMobile: Boolean(merged.disableOnMobile),
     size: Number(merged.size),
-    outlineWidth: Number(merged.outlineWidth),
-    glow: Number(merged.glow),
-    trail: Number(merged.trail),
-    clickScale: Number(merged.clickScale),
-    hoverScale: Number(merged.hoverScale),
+    hoverSize: Number(merged.hoverSize ?? merged.size),
+    defaultColor: normalizeHexColor(
+      merged.defaultColor,
+      presetItem?.defaultColor || DEFAULT_SETTINGS.defaultColor,
+    ),
+    defaultAccentColor: normalizeHexColor(
+      merged.defaultAccentColor,
+      presetItem?.defaultAccentColor || DEFAULT_SETTINGS.defaultAccentColor,
+    ),
+    hoverColor: normalizeHexColor(
+      merged.hoverColor,
+      presetItem?.hoverColor || DEFAULT_SETTINGS.hoverColor,
+    ),
+    hoverAccentColor: normalizeHexColor(
+      merged.hoverAccentColor,
+      presetItem?.hoverAccentColor || DEFAULT_SETTINGS.hoverAccentColor,
+    ),
     preset: normalizedPreset,
     imageUrl: imageUrl || presetItem?.imageUrl || "",
     hoverImageUrl: hoverImageUrl || presetItem?.hoverImageUrl || "",
@@ -415,9 +866,60 @@ export const action = async ({ request }: ActionFunctionArgs) => {
               {
                 ownerId: installationId,
                 namespace: "fourcore_cursor",
+                key: "enabled",
+                type: "boolean",
+                value: String(Boolean(normalized.enabled)),
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
+                key: "disable_on_mobile",
+                type: "boolean",
+                value: String(Boolean(normalized.disableOnMobile)),
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
                 key: "cursor_size",
                 type: "number_integer",
                 value: String(Math.round(normalized.size || 32)),
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
+                key: "hover_cursor_size",
+                type: "number_integer",
+                value: String(
+                  Math.round(normalized.hoverSize || normalized.size || 32),
+                ),
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
+                key: "default_color",
+                type: "single_line_text_field",
+                value: normalized.defaultColor,
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
+                key: "default_accent_color",
+                type: "single_line_text_field",
+                value: normalized.defaultAccentColor,
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
+                key: "hover_color",
+                type: "single_line_text_field",
+                value: normalized.hoverColor,
+              },
+              {
+                ownerId: installationId,
+                namespace: "fourcore_cursor",
+                key: "hover_accent_color",
+                type: "single_line_text_field",
+                value: normalized.hoverAccentColor,
               },
             ],
           },
@@ -455,17 +957,20 @@ export default function Index() {
   const [previewHover, setPreviewHover] = useState(false);
   const [uploadName, setUploadName] = useState("");
   const previewStageRef = useRef<HTMLDivElement | null>(null);
+  const previewButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const previewStyle = useMemo(
     () =>
       ({
-        "--cursor-color": settings.color,
-        "--cursor-outline": settings.outlineColor,
-        "--cursor-size": `${settings.size}px`,
-        "--cursor-outline-width": `${settings.outlineWidth}px`,
-        "--cursor-glow": `${settings.glow}px`,
+        "--cursor-color": settings.defaultColor,
+        "--cursor-outline": settings.defaultAccentColor,
+        "--cursor-size": `${
+          previewHover ? settings.hoverSize : settings.size
+        }px`,
+        "--cursor-outline-width": "2px",
+        "--cursor-glow": "0px",
       }) as CSSProperties,
-    [settings],
+    [settings, previewHover],
   );
   const previewCursorStyle = useMemo(
     () =>
@@ -475,15 +980,30 @@ export default function Index() {
       }) as CSSProperties,
     [previewPos],
   );
-  const selectedCursor = useMemo(() => {
-    for (const category of CURSOR_LIBRARY) {
-      const item = category.items.find(
-        (cursor) => cursor.id === settings.preset,
-      );
-      if (item) return item;
-    }
-    return null;
-  }, [settings.preset]);
+  const isCustomCursor =
+    settings.preset === "custom" && settings.imageUrl.startsWith("http");
+  const isBuiltInPreset = Boolean(CURSOR_TEMPLATES[settings.preset]);
+  const previewPresetSvg = useMemo(() => {
+    if (!isBuiltInPreset) return null;
+    return buildCursorSvg(
+      settings.preset,
+      {
+        fill: settings.defaultColor,
+        accent: settings.defaultAccentColor,
+        hoverFill: settings.hoverColor,
+        hoverAccent: settings.hoverAccentColor,
+      },
+      previewHover,
+    );
+  }, [
+    isBuiltInPreset,
+    previewHover,
+    settings.defaultAccentColor,
+    settings.defaultColor,
+    settings.hoverAccentColor,
+    settings.hoverColor,
+    settings.preset,
+  ]);
 
   const isSaving =
     ["loading", "submitting"].includes(fetcher.state) &&
@@ -517,11 +1037,10 @@ export default function Index() {
       ...current,
       imageUrl: item.imageUrl,
       hoverImageUrl: item.hoverImageUrl,
-      size: item.size || 24,
-      outlineWidth: 0,
-      glow: 0,
-      blendMode: "normal",
-      hideNative: true,
+      defaultColor: item.defaultColor,
+      defaultAccentColor: item.defaultAccentColor,
+      hoverColor: item.hoverColor,
+      hoverAccentColor: item.hoverAccentColor,
       preset: item.id,
     }));
   };
@@ -567,13 +1086,12 @@ export default function Index() {
 
   const handlePreviewMove = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    const stage = previewStageRef.current;
-    const stageRect = stage?.getBoundingClientRect();
-    const isHoverTarget = stageRect
-      ? event.clientX >= stageRect.left &&
-        event.clientX <= stageRect.right &&
-        event.clientY >= stageRect.top &&
-        event.clientY <= stageRect.bottom
+    const targetRect = previewStageRef.current?.getBoundingClientRect();
+    const isHoverTarget = targetRect
+      ? event.clientX >= targetRect.left &&
+        event.clientX <= targetRect.right &&
+        event.clientY >= targetRect.top &&
+        event.clientY <= targetRect.bottom
       : false;
     setPreviewPos({
       x: event.clientX - rect.left,
@@ -596,7 +1114,7 @@ export default function Index() {
         </div>
 
         <div className={styles.studioGrid}>
-        <div className={styles.galleryPanel}>
+          <div className={styles.galleryPanel}>
           <div className={styles.tabs}>
             <button
               type="button"
@@ -626,25 +1144,27 @@ export default function Index() {
               Upload your own
             </button>
           </div>
+          {activeTab === "gallery" ? (
+            <div className={styles.categoryRow}>
+              {CURSOR_LIBRARY.map((category) => (
+                <button
+                  key={category.id}
+                  type="button"
+                  className={`${styles.categoryButton} ${
+                    activeCategory === category.id
+                      ? styles.categoryActive
+                      : ""
+                  }`}
+                  onClick={() => setActiveCategory(category.id)}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          ) : null}
 
           {activeTab === "gallery" ? (
             <>
-              <div className={styles.categoryRow}>
-                {CURSOR_LIBRARY.map((category) => (
-                  <button
-                    key={category.id}
-                    type="button"
-                    className={`${styles.categoryButton} ${
-                      activeCategory === category.id
-                        ? styles.categoryActive
-                        : ""
-                    }`}
-                    onClick={() => setActiveCategory(category.id)}
-                  >
-                    {category.name}
-                  </button>
-                ))}
-              </div>
               <div className={styles.cursorGrid}>
                 {CURSOR_LIBRARY.find(
                   (category) => category.id === activeCategory,
@@ -778,17 +1298,16 @@ export default function Index() {
               Move your mouse here to preview
             </div>
             <div className={styles.previewStage} ref={previewStageRef}>
-              <button type="button">Button</button>
+              <button type="button" ref={previewButtonRef}>
+                Button
+              </button>
             </div>
-            {selectedCursor ? (
+            {previewPresetSvg ? (
               <span
                 className={styles.previewSvg}
                 style={previewCursorStyle}
                 dangerouslySetInnerHTML={{
-                  __html:
-                    previewHover && selectedCursor.previewHoverSvg
-                      ? selectedCursor.previewHoverSvg
-                      : selectedCursor.previewSvg,
+                  __html: previewPresetSvg,
                 }}
               />
             ) : settings.imageUrl ? (
@@ -841,11 +1360,11 @@ export default function Index() {
             </div>
             <div className={styles.sizeRow}>
               <label>
-                Cursor size
+                Default cursor size
                 <input
                   type="range"
-                  min={20}
-                  max={96}
+                  min={24}
+                  max={64}
                   step={4}
                   value={settings.size}
                   onChange={(event) =>
@@ -855,8 +1374,8 @@ export default function Index() {
               </label>
               <input
                 type="number"
-                min={20}
-                max={96}
+                min={24}
+                max={64}
                 step={4}
                 value={settings.size}
                 onChange={(event) =>
@@ -864,6 +1383,84 @@ export default function Index() {
                 }
               />
             </div>
+            <div className={styles.sizeRow}>
+              <label>
+                Hover cursor size
+                <input
+                  type="range"
+                  min={24}
+                  max={64}
+                  step={4}
+                  value={settings.hoverSize}
+                  onChange={(event) =>
+                    updateSetting("hoverSize", Number(event.target.value))
+                  }
+                />
+              </label>
+              <input
+                type="number"
+                min={24}
+                max={64}
+                step={4}
+                value={settings.hoverSize}
+                onChange={(event) =>
+                  updateSetting("hoverSize", Number(event.target.value))
+                }
+              />
+            </div>
+            <div className={styles.colorRow}>
+              <label>
+                Default color
+                <input
+                  type="color"
+                  value={settings.defaultColor}
+                  disabled={isCustomCursor}
+                  onChange={(event) =>
+                    updateSetting("defaultColor", event.target.value)
+                  }
+                />
+              </label>
+              <label>
+                Default accent
+                <input
+                  type="color"
+                  value={settings.defaultAccentColor}
+                  disabled={isCustomCursor}
+                  onChange={(event) =>
+                    updateSetting("defaultAccentColor", event.target.value)
+                  }
+                />
+              </label>
+            </div>
+            <div className={styles.colorRow}>
+              <label>
+                Hover color
+                <input
+                  type="color"
+                  value={settings.hoverColor}
+                  disabled={isCustomCursor}
+                  onChange={(event) =>
+                    updateSetting("hoverColor", event.target.value)
+                  }
+                />
+              </label>
+              <label>
+                Hover accent
+                <input
+                  type="color"
+                  value={settings.hoverAccentColor}
+                  disabled={isCustomCursor}
+                  onChange={(event) =>
+                    updateSetting("hoverAccentColor", event.target.value)
+                  }
+                />
+              </label>
+            </div>
+            {isCustomCursor ? (
+              <p className={styles.helperText}>
+                Color controls apply to built-in cursors only.
+              </p>
+            ) : null}
             <p className={styles.helperText}>
               Uses native CSS cursors for zero impact on page speed.
             </p>

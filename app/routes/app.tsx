@@ -19,6 +19,7 @@ export default function App() {
     <AppProvider embedded apiKey={apiKey}>
       <s-app-nav>
         <s-link href="/app">Cursor Studio</s-link>
+        <s-link href="/app/help">Help</s-link>
       </s-app-nav>
       <Outlet />
     </AppProvider>

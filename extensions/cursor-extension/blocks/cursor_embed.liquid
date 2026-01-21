@@ -1,178 +1,90 @@
 {% assign default_value = app.metafields.fourcore_cursor.default_cursor.value | default: "cartoon-bag" %}
 {% assign hover_value = app.metafields.fourcore_cursor.hover_cursor.value | default: "cartoon-bag-hover" %}
 {% assign size_value = app.metafields.fourcore_cursor.cursor_size.value | default: 32 | plus: 0 %}
+{% assign hover_size_value = app.metafields.fourcore_cursor.hover_cursor_size.value | default: size_value | plus: 0 %}
+{% assign enabled_value = app.metafields.fourcore_cursor.enabled.value | default: true %}
+{% assign disable_mobile_value = app.metafields.fourcore_cursor.disable_on_mobile.value | default: true %}
+{% assign default_color = app.metafields.fourcore_cursor.default_color.value | default: "#ff7a59" %}
+{% assign default_accent = app.metafields.fourcore_cursor.default_accent_color.value | default: "#ffd166" %}
+{% assign hover_color = app.metafields.fourcore_cursor.hover_color.value | default: "#ff4d4d" %}
+{% assign hover_accent = app.metafields.fourcore_cursor.hover_accent_color.value | default: "#ffe29a" %}
 
-{% if size_value >= 80 %}
-  {% assign size_key = "3x" %}
-{% elsif size_value >= 48 %}
-  {% assign size_key = "2x" %}
-{% else %}
-  {% assign size_key = "1x" %}
+{% assign size_key = size_value | divided_by: 4 | round | times: 4 %}
+{% if size_key < 24 %}
+  {% assign size_key = 24 %}
+{% endif %}
+{% if size_key > 64 %}
+  {% assign size_key = 64 %}
 {% endif %}
 
+{% assign hover_size_key = hover_size_value | divided_by: 4 | round | times: 4 %}
+{% if hover_size_key < 24 %}
+  {% assign hover_size_key = 24 %}
+{% endif %}
+{% if hover_size_key > 64 %}
+  {% assign hover_size_key = 64 %}
+{% endif %}
+
+{% assign default_color_param = default_color | url_encode %}
+{% assign default_accent_param = default_accent | url_encode %}
+{% assign hover_color_param = hover_color | url_encode %}
+{% assign hover_accent_param = hover_accent | url_encode %}
+
 {% if default_value contains "http" %}
-  {% assign default_1x = default_value %}
-  {% assign default_2x = default_value %}
-  {% assign default_3x = default_value %}
+  {% assign default_url = default_value %}
 {% else %}
-  {% case default_value %}
-    {% when "cartoon-bag" %}
-      {% assign default_1x = "cartoon-bag@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-bag@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-bag@3x.png" | asset_url %}
-    {% when "cartoon-sale" %}
-      {% assign default_1x = "cartoon-sale@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-sale@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-sale@3x.png" | asset_url %}
-    {% when "cartoon-heart" %}
-      {% assign default_1x = "cartoon-heart@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-heart@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-heart@3x.png" | asset_url %}
-    {% when "cartoon-gift" %}
-      {% assign default_1x = "cartoon-gift@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-gift@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-gift@3x.png" | asset_url %}
-    {% when "cartoon-green" %}
-      {% assign default_1x = "cartoon-green@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-green@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-green@3x.png" | asset_url %}
-    {% when "cartoon-sweet" %}
-      {% assign default_1x = "cartoon-sweet@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-sweet@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-sweet@3x.png" | asset_url %}
-    {% when "commerce-luxe" %}
-      {% assign default_1x = "commerce-luxe@1x.png" | asset_url %}
-      {% assign default_2x = "commerce-luxe@2x.png" | asset_url %}
-      {% assign default_3x = "commerce-luxe@3x.png" | asset_url %}
-    {% when "commerce-tech" %}
-      {% assign default_1x = "commerce-tech@1x.png" | asset_url %}
-      {% assign default_2x = "commerce-tech@2x.png" | asset_url %}
-      {% assign default_3x = "commerce-tech@3x.png" | asset_url %}
-    {% when "commerce-min" %}
-      {% assign default_1x = "commerce-min@1x.png" | asset_url %}
-      {% assign default_2x = "commerce-min@2x.png" | asset_url %}
-      {% assign default_3x = "commerce-min@3x.png" | asset_url %}
-    {% when "commerce-organic" %}
-      {% assign default_1x = "commerce-organic@1x.png" | asset_url %}
-      {% assign default_2x = "commerce-organic@2x.png" | asset_url %}
-      {% assign default_3x = "commerce-organic@3x.png" | asset_url %}
-    {% when "season-holiday" %}
-      {% assign default_1x = "season-holiday@1x.png" | asset_url %}
-      {% assign default_2x = "season-holiday@2x.png" | asset_url %}
-      {% assign default_3x = "season-holiday@3x.png" | asset_url %}
-    {% when "season-sun" %}
-      {% assign default_1x = "season-sun@1x.png" | asset_url %}
-      {% assign default_2x = "season-sun@2x.png" | asset_url %}
-      {% assign default_3x = "season-sun@3x.png" | asset_url %}
-    {% when "season-sport" %}
-      {% assign default_1x = "season-sport@1x.png" | asset_url %}
-      {% assign default_2x = "season-sport@2x.png" | asset_url %}
-      {% assign default_3x = "season-sport@3x.png" | asset_url %}
-    {% else %}
-      {% assign default_1x = "cartoon-bag@1x.png" | asset_url %}
-      {% assign default_2x = "cartoon-bag@2x.png" | asset_url %}
-      {% assign default_3x = "cartoon-bag@3x.png" | asset_url %}
-  {% endcase %}
+  {% assign default_url = "/apps/fourcore-cursor/cursor?preset=" | append: default_value | append: "&state=default&size=" | append: size_key | append: "&color=" | append: default_color_param | append: "&accent=" | append: default_accent_param %}
 {% endif %}
 
 {% if hover_value contains "http" %}
-  {% assign hover_1x = hover_value %}
-  {% assign hover_2x = hover_value %}
-  {% assign hover_3x = hover_value %}
+  {% assign hover_url = hover_value %}
 {% else %}
-  {% case hover_value %}
-    {% when "cartoon-bag-hover" %}
-      {% assign hover_1x = "cartoon-bag-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-bag-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-bag-hover@3x.png" | asset_url %}
-    {% when "cartoon-sale-hover" %}
-      {% assign hover_1x = "cartoon-sale-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-sale-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-sale-hover@3x.png" | asset_url %}
-    {% when "cartoon-heart-hover" %}
-      {% assign hover_1x = "cartoon-heart-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-heart-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-heart-hover@3x.png" | asset_url %}
-    {% when "cartoon-gift-hover" %}
-      {% assign hover_1x = "cartoon-gift-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-gift-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-gift-hover@3x.png" | asset_url %}
-    {% when "cartoon-green-hover" %}
-      {% assign hover_1x = "cartoon-green-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-green-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-green-hover@3x.png" | asset_url %}
-    {% when "cartoon-sweet-hover" %}
-      {% assign hover_1x = "cartoon-sweet-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-sweet-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-sweet-hover@3x.png" | asset_url %}
-    {% when "commerce-luxe-hover" %}
-      {% assign hover_1x = "commerce-luxe-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "commerce-luxe-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "commerce-luxe-hover@3x.png" | asset_url %}
-    {% when "commerce-tech-hover" %}
-      {% assign hover_1x = "commerce-tech-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "commerce-tech-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "commerce-tech-hover@3x.png" | asset_url %}
-    {% when "commerce-min-hover" %}
-      {% assign hover_1x = "commerce-min-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "commerce-min-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "commerce-min-hover@3x.png" | asset_url %}
-    {% when "commerce-organic-hover" %}
-      {% assign hover_1x = "commerce-organic-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "commerce-organic-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "commerce-organic-hover@3x.png" | asset_url %}
-    {% when "season-holiday-hover" %}
-      {% assign hover_1x = "season-holiday-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "season-holiday-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "season-holiday-hover@3x.png" | asset_url %}
-    {% when "season-sun-hover" %}
-      {% assign hover_1x = "season-sun-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "season-sun-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "season-sun-hover@3x.png" | asset_url %}
-    {% when "season-sport-hover" %}
-      {% assign hover_1x = "season-sport-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "season-sport-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "season-sport-hover@3x.png" | asset_url %}
-    {% else %}
-      {% assign hover_1x = "cartoon-bag-hover@1x.png" | asset_url %}
-      {% assign hover_2x = "cartoon-bag-hover@2x.png" | asset_url %}
-      {% assign hover_3x = "cartoon-bag-hover@3x.png" | asset_url %}
-  {% endcase %}
+  {% assign hover_url = "/apps/fourcore-cursor/cursor?preset=" | append: default_value | append: "&state=hover&size=" | append: hover_size_key | append: "&color=" | append: hover_color_param | append: "&accent=" | append: hover_accent_param %}
 {% endif %}
 
-{% if size_key == "1x" %}
-  {% assign default_2x = default_1x %}
-  {% assign default_3x = default_1x %}
-  {% assign hover_2x = hover_1x %}
-  {% assign hover_3x = hover_1x %}
-{% elsif size_key == "2x" %}
-  {% assign default_1x = default_2x %}
-  {% assign default_3x = default_2x %}
-  {% assign hover_1x = hover_2x %}
-  {% assign hover_3x = hover_2x %}
-{% else %}
-  {% assign default_1x = default_3x %}
-  {% assign default_2x = default_3x %}
-  {% assign hover_1x = hover_3x %}
-  {% assign hover_2x = hover_3x %}
+{% if enabled_value == true or enabled_value == "true" %}
+  <style id="fourcore-cursor-style">
+    * {
+      cursor: inherit !important;
+    }
+
+    html, body, label {
+      cursor: url("{{ default_url }}") 0 0, auto !important;
+    }
+
+    a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
+      cursor: url("{{ hover_url }}") 0 0, auto !important;
+    }
+
+    html::before,
+    html::after {
+      content: "";
+      position: fixed;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    html::before {
+      background-image: url("{{ default_url }}");
+    }
+
+    html::after {
+      background-image: url("{{ hover_url }}");
+    }
+
+    {% if disable_mobile_value == true or disable_mobile_value == "true" %}
+    @media (pointer: coarse) {
+      html, body, label,
+      a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
+        cursor: auto !important;
+      }
+    }
+    {% endif %}
+  </style>
 {% endif %}
-
-<style id="fourcore-cursor-style">
-  * {
-    cursor: inherit !important;
-  }
-
-  html, body, label {
-    cursor: -webkit-image-set(url("{{ default_1x }}") 1x, url("{{ default_2x }}") 2x, url("{{ default_3x }}") 3x), auto !important;
-    cursor: image-set(url("{{ default_1x }}") 1x, url("{{ default_2x }}") 2x, url("{{ default_3x }}") 3x), auto !important;
-  }
-
-  a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
-    cursor: -webkit-image-set(url("{{ hover_1x }}") 1x, url("{{ hover_2x }}") 2x, url("{{ hover_3x }}") 3x), auto !important;
-    cursor: image-set(url("{{ hover_1x }}") 1x, url("{{ hover_2x }}") 2x, url("{{ hover_3x }}") 3x), auto !important;
-  }
-</style>
-
 
 {% schema %}
 {

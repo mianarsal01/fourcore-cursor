@@ -28,8 +28,8 @@ export default function App() {
               Custom cursors that turn browsing into a branded moment.
             </h1>
             <p className={styles.text}>
-              Launch a cursor experience in minutes. No code, just presets, AI
-              styling, and instant preview.
+              Launch a cursor experience in minutes. No code, just presets and
+              instant preview.
             </p>
           </div>
           <div className={styles.heroCard}>
@@ -61,12 +61,12 @@ export default function App() {
             and customize every detail.
           </li>
           <li>
-            <strong>AI style studio</strong>. Generate cursor vibes from a
-            prompt in seconds.
+            <strong>Saved cursors</strong>. Keep your favorites ready to reuse
+            anytime.
           </li>
           <li>
-            <strong>Targeting controls</strong>. Limit the cursor to specific
-            pages or templates.
+            <strong>Lightweight embed</strong>. Uses native CSS cursors to
+            minimize page impact.
           </li>
         </ul>
       </div>

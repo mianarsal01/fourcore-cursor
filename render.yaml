@@ -1,0 +1,28 @@
+databases:
+  - name: fourcore-cursor-db
+    databaseName: fourcore_cursor
+    user: fourcore_cursor
+    plan: free
+
+services:
+  - type: web
+    name: fourcore-cursor
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build && npm run setup
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SCOPES
+        value: write_metafields
+      - key: SHOPIFY_API_KEY
+        sync: false
+      - key: SHOPIFY_API_SECRET
+        sync: false
+      - key: SHOPIFY_APP_URL
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fourcore-cursor-db
+          property: connectionString

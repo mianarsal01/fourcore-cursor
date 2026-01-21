@@ -1,0 +1,159 @@
+.index {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: radial-gradient(circle at top, #e0f2fe, #f8fafc);
+}
+
+.content {
+  max-width: 960px;
+  width: 100%;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.hero {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  align-items: center;
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  color: #0f172a;
+  margin-bottom: 0.6rem;
+}
+
+.heading {
+  font-size: 2.4rem;
+  margin: 0 0 1rem;
+  color: #0f172a;
+}
+
+.text {
+  font-size: 1.1rem;
+  color: #475569;
+  margin: 0;
+}
+
+.heroCard {
+  border-radius: 1.4rem;
+  padding: 1.5rem;
+  background: #0f172a;
+  color: #e2e8f0;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+}
+
+.heroPreview {
+  height: 140px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.heroPreview span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.heroPreview span:first-child {
+  width: 14px;
+  height: 14px;
+  background: #22d3ee;
+  box-shadow: 0 0 18px #22d3ee;
+}
+
+.heroPreview span:last-child {
+  width: 42px;
+  height: 42px;
+  border: 2px solid #bae6fd;
+  box-shadow: 0 0 20px #38bdf8;
+}
+
+.heroCopy {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.heroCopy p {
+  margin: 0;
+  color: #94a3b8;
+}
+
+.form {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1.2rem;
+  border: 1px solid #e2e8f0;
+}
+
+.label {
+  display: grid;
+  gap: 0.3rem;
+  flex: 1 1 260px;
+  color: #1e293b;
+}
+
+.input {
+  border-radius: 0.8rem;
+  border: 1px solid #cbd5f5;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+}
+
+.button {
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  background: #0f172a;
+  color: #f8fafc;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.list li {
+  background: #ffffff;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+}
+
+.list strong {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #0f172a;
+}
+
+@media (max-width: 720px) {
+  .heading {
+    font-size: 2rem;
+  }
+
+  .form {
+    align-items: stretch;
+  }
+}

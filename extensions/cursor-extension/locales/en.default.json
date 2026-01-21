@@ -1,0 +1,8 @@
+{
+  "cursor": {
+    "name": "FourCore Cursor",
+    "enable": "Enable custom cursor",
+    "disableOnMobile": "Disable on mobile",
+    "excludeSelector": "Exclude selector (optional)"
+  }
+}

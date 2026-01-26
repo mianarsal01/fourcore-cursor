@@ -1,6 +1,7 @@
 import type { LoaderFunctionArgs } from "react-router";
 import { authenticate } from "../shopify.server";
 import { buildCursorSvg, CURSOR_TEMPLATES } from "../cursor-templates";
+import { checkRateLimit } from "../rate-limiter.server";
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
@@ -17,7 +18,15 @@ const withSize = (svg: string, size: number) =>
     .replace('width="64"', `width="${size}"`)
     .replace('height="64"', `height="${size}"`);
 
+const TRANSPARENT_SVG =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1" style="background:transparent"></svg>';
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const rateLimitResponse = checkRateLimit(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   await authenticate.public.appProxy(request);
   const url = new URL(request.url);
   const preset = url.searchParams.get("preset") || "cartoon-bag";
@@ -42,7 +51,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   );
 
   if (!svg) {
-    return new Response("", { status: 204 });
+    return new Response(TRANSPARENT_SVG, {
+      headers: {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
+    });
   }
 
   return new Response(withSize(svg, size), {

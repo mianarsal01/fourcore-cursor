@@ -2,7 +2,7 @@
 
 client_id = "76d0c004393738919f20942caa5ceb75"
 name = "FourCore Cursor"
-application_url = "https://example.com"
+application_url = "https://fourcore-cursor-i65y.onrender.com"
 embedded = true
 
 [build]
@@ -20,13 +20,17 @@ api_version = "2026-04"
   uri = "/webhooks/app/uninstalled"
 
 [access_scopes]
-# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+# Embed-only app: keep scopes minimal.
+# If your app works with empty scopes, set scopes = "".
+# If your auth flow requires a scope, use read_themes.
+scopes = "read_themes"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [
+  "https://fourcore-cursor-i65y.onrender.com/api/auth"
+]
 
 [app_proxy]
-url = "/app-proxy"
+url = "https://fourcore-cursor-i65y.onrender.com/app-proxy"
 subpath = "fourcore-cursor"
 prefix = "apps"

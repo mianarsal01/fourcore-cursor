@@ -27,4 +27,4 @@ Settings are stored while the App is installed. When you uninstall the App, the 
 
 ## Contact
 
-If you have questions about this policy, contact support at mianarsal01@gmail.com
+If you have questions about this policy, contact support at support@fourcore.com.

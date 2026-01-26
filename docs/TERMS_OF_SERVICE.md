@@ -22,4 +22,4 @@ To the maximum extent permitted by law, FourCore Cursor is provided "as is" and 
 
 ## Contact
 
-For questions about these terms, contact support at mianarsal01@gmail.com.
+For questions about these terms, contact support at support@fourcore.com.

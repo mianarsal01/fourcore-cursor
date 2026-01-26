@@ -1,6 +1,6 @@
 # Support
 
-If you need help with FourCore Cursor, contact us at mianarsal01@gmail.com
+If you need help with FourCore Cursor, contact us at support@fourcore.com.
 
 Please include:
 - Store domain

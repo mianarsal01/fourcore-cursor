@@ -2,7 +2,7 @@
 
 client_id = "76d0c004393738919f20942caa5ceb75"
 name = "FourCore Cursor"
-application_url = "https://fourcore-cursor-i65y.onrender.com"
+application_url = "https://example.com"
 embedded = true
 
 [build]
@@ -24,9 +24,9 @@ api_version = "2026-04"
 scopes = "write_products"
 
 [auth]
-redirect_urls = [ "https://fourcore-cursor-i65y.onrender.com/api/auth" ]
+redirect_urls = [ "https://example.com/api/auth" ]
 
 [app_proxy]
-url = "https://fourcore-cursor-i65y.onrender.com/app-proxy"
+url = "/app-proxy"
 subpath = "fourcore-cursor"
 prefix = "apps"

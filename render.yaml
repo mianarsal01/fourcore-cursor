@@ -15,7 +15,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: SCOPES
-        value: write_metafields
+        value: read_themes
       - key: SHOPIFY_API_KEY
         sync: false
       - key: SHOPIFY_API_SECRET

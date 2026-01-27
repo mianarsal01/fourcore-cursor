@@ -952,12 +952,12 @@ export default function Index() {
     useState<CursorSettings>(initialSettings);
   const [activeTab, setActiveTab] =
     useState<"gallery" | "saved" | "upload">("gallery");
-  const [activeCategory, setActiveCategory] = useState(CURSOR_LIBRARY[0].id);
+  const [activeCategory, setActiveCategory] = useState("all");
   const [previewPos, setPreviewPos] = useState({ x: 120, y: 120 });
   const [previewHover, setPreviewHover] = useState(false);
   const [uploadName, setUploadName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const previewStageRef = useRef<HTMLDivElement | null>(null);
-  const previewButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const previewStyle = useMemo(
     () =>
@@ -1004,6 +1004,19 @@ export default function Index() {
     settings.hoverColor,
     settings.preset,
   ]);
+
+  const galleryItems = useMemo(() => {
+    const items =
+      activeCategory === "all"
+        ? CURSOR_LIBRARY.flatMap((category) => category.items)
+        : CURSOR_LIBRARY.find((category) => category.id === activeCategory)
+            ?.items || [];
+    const normalizedQuery = searchTerm.trim().toLowerCase();
+    if (!normalizedQuery) return items;
+    return items.filter((item) =>
+      item.name.toLowerCase().includes(normalizedQuery),
+    );
+  }, [activeCategory, searchTerm]);
 
   const isSaving =
     ["loading", "submitting"].includes(fetcher.state) &&
@@ -1101,388 +1114,29 @@ export default function Index() {
   };
 
   return (
-    <s-page heading="FourCore Cursor">
+    <s-page heading="FourCore Cursor" inlineSize="large">
       <div className={styles.studio}>
         <div className={styles.pageHeader}>
           <div className={styles.headerTitle}>
-            <p className={styles.kicker}>Cursor studio</p>
-            <h2>Select custom cursor</h2>
-          </div>
-          <button className={styles.reviewButton} type="button">
-            Leave a review
-          </button>
-        </div>
-
-        <div className={styles.studioGrid}>
-          <div className={styles.galleryPanel}>
-          <div className={styles.tabs}>
-            <button
-              type="button"
-              className={`${styles.tabButton} ${
-                activeTab === "gallery" ? styles.tabActive : ""
-              }`}
-              onClick={() => setActiveTab("gallery")}
-            >
-              Cursor gallery
-            </button>
-            <button
-              type="button"
-              className={`${styles.tabButton} ${
-                activeTab === "saved" ? styles.tabActive : ""
-              }`}
-              onClick={() => setActiveTab("saved")}
-            >
-              Saved cursors
-            </button>
-            <button
-              type="button"
-              className={`${styles.tabButton} ${
-                activeTab === "upload" ? styles.tabActive : ""
-              }`}
-              onClick={() => setActiveTab("upload")}
-            >
-              Upload your own
-            </button>
-          </div>
-          {activeTab === "gallery" ? (
-            <div className={styles.categoryRow}>
-              {CURSOR_LIBRARY.map((category) => (
-                <button
-                  key={category.id}
-                  type="button"
-                  className={`${styles.categoryButton} ${
-                    activeCategory === category.id
-                      ? styles.categoryActive
-                      : ""
-                  }`}
-                  onClick={() => setActiveCategory(category.id)}
-                >
-                  {category.name}
-                </button>
-              ))}
-            </div>
-          ) : null}
-
-          {activeTab === "gallery" ? (
-            <>
-              <div className={styles.cursorGrid}>
-                {CURSOR_LIBRARY.find(
-                  (category) => category.id === activeCategory,
-                )?.items.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={`${styles.cursorTile} ${
-                      settings.preset === item.id ? styles.cursorActive : ""
-                    }`}
-                    onClick={() => applyCursorItem(item)}
-                  >
-                    <div className={styles.cursorIcons}>
-                      <span
-                        className={styles.cursorSvg}
-                        dangerouslySetInnerHTML={{ __html: item.previewSvg }}
-                      />
-                      <span
-                        className={styles.cursorSvg}
-                        dangerouslySetInnerHTML={{
-                          __html: item.previewHoverSvg,
-                        }}
-                      />
-                    </div>
-                    <span>{item.name}</span>
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : activeTab === "saved" ? (
-            <div className={styles.savedGrid}>
-              {settings.savedCursors.length ? (
-                settings.savedCursors.map((saved) => (
-                  <div key={saved.id} className={styles.savedCard}>
-                    <div className={styles.savedHeader}>
-                      <span>{saved.name}</span>
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteSaved(saved.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                    <div className={styles.savedPreview}>
-                      <img src={saved.imageUrl} alt={`${saved.name} default`} />
-                      <img
-                        src={saved.hoverImageUrl}
-                        alt={`${saved.name} hover`}
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      className={styles.savedApply}
-                      onClick={() => applySavedCursor(saved)}
-                    >
-                      Use this cursor
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p className={styles.helperText}>
-                  No saved cursors yet. Upload a cursor to build your library.
-                </p>
-              )}
-            </div>
-          ) : (
-            <div className={styles.uploadPanel}>
-              <div className={styles.uploadBox}>
-                <p>Paste URLs for your cursor images (PNG recommended).</p>
-                <div className={styles.uploadInputs}>
-                  <input
-                    type="text"
-                    placeholder="Cursor name (optional)"
-                    value={uploadName}
-                    onChange={(event) => setUploadName(event.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Default cursor image URL"
-                    value={settings.imageUrl}
-                    onChange={(event) =>
-                      setSettings((current) => ({
-                        ...current,
-                        imageUrl: event.target.value,
-                        preset: "custom",
-                      }))
-                    }
-                  />
-                  <input
-                    type="text"
-                    placeholder="Hover cursor image URL"
-                    value={settings.hoverImageUrl}
-                    onChange={(event) =>
-                      setSettings((current) => ({
-                        ...current,
-                        hoverImageUrl: event.target.value,
-                        preset: "custom",
-                      }))
-                    }
-                  />
-                </div>
-                <p className={styles.uploadNote}>
-                  Tip: Use a 32px PNG with a transparent background.
-                </p>
-                <button
-                  type="button"
-                  className={styles.primaryButton}
-                  onClick={handleSaveCursor}
-                >
-                  Save to library
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className={styles.previewPanel}>
-          <div className={styles.previewHeader}>
-            <span>Preview area</span>
-            <span className={styles.previewBadge}>
-              {settings.enabled ? "Enabled" : "Paused"}
-            </span>
-          </div>
-          <div
-            className={styles.previewCanvas}
-            style={previewStyle}
-            onMouseMove={handlePreviewMove}
-            onMouseLeave={() => setPreviewHover(false)}
-          >
-            <div className={styles.previewNote}>
-              Move your mouse here to preview
-            </div>
-            <div className={styles.previewStage} ref={previewStageRef}>
-              <button type="button" ref={previewButtonRef}>
-                Button
-              </button>
-            </div>
-            {previewPresetSvg ? (
-              <span
-                className={styles.previewSvg}
-                style={previewCursorStyle}
-                dangerouslySetInnerHTML={{
-                  __html: previewPresetSvg,
-                }}
-              />
-            ) : settings.imageUrl ? (
-              <img
-                className={styles.previewImage}
-                style={previewCursorStyle}
-                src={
-                  previewHover && settings.hoverImageUrl
-                    ? settings.hoverImageUrl
-                    : settings.imageUrl
-                }
-                alt="Cursor preview"
-              />
-            ) : (
-              <>
-                <div
-                  className={styles.previewCursor}
-                  style={previewCursorStyle}
-                />
-                <div
-                  className={styles.previewRing}
-                  style={previewCursorStyle}
-                />
-              </>
-            )}
-          </div>
-
-          <div className={styles.controlBlock}>
-            <div className={styles.toggleRow}>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={settings.enabled}
-                  onChange={(event) =>
-                    updateSetting("enabled", event.target.checked)
-                  }
-                />
-                Enable custom cursor
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={settings.disableOnMobile}
-                  onChange={(event) =>
-                    updateSetting("disableOnMobile", event.target.checked)
-                  }
-                />
-                Disable on mobile
-              </label>
-            </div>
-            <div className={styles.sizeRow}>
-              <label>
-                Default cursor size
-                <input
-                  type="range"
-                  min={24}
-                  max={64}
-                  step={4}
-                  value={settings.size}
-                  onChange={(event) =>
-                    updateSetting("size", Number(event.target.value))
-                  }
-                />
-              </label>
-              <input
-                type="number"
-                min={24}
-                max={64}
-                step={4}
-                value={settings.size}
-                onChange={(event) =>
-                  updateSetting("size", Number(event.target.value))
-                }
-              />
-            </div>
-            <div className={styles.sizeRow}>
-              <label>
-                Hover cursor size
-                <input
-                  type="range"
-                  min={24}
-                  max={64}
-                  step={4}
-                  value={settings.hoverSize}
-                  onChange={(event) =>
-                    updateSetting("hoverSize", Number(event.target.value))
-                  }
-                />
-              </label>
-              <input
-                type="number"
-                min={24}
-                max={64}
-                step={4}
-                value={settings.hoverSize}
-                onChange={(event) =>
-                  updateSetting("hoverSize", Number(event.target.value))
-                }
-              />
-            </div>
-            <div className={styles.colorRow}>
-              <label>
-                Default color
-                <input
-                  type="color"
-                  value={settings.defaultColor}
-                  disabled={isCustomCursor}
-                  onChange={(event) =>
-                    updateSetting("defaultColor", event.target.value)
-                  }
-                />
-              </label>
-              <label>
-                Default accent
-                <input
-                  type="color"
-                  value={settings.defaultAccentColor}
-                  disabled={isCustomCursor}
-                  onChange={(event) =>
-                    updateSetting("defaultAccentColor", event.target.value)
-                  }
-                />
-              </label>
-            </div>
-            <div className={styles.colorRow}>
-              <label>
-                Hover color
-                <input
-                  type="color"
-                  value={settings.hoverColor}
-                  disabled={isCustomCursor}
-                  onChange={(event) =>
-                    updateSetting("hoverColor", event.target.value)
-                  }
-                />
-              </label>
-              <label>
-                Hover accent
-                <input
-                  type="color"
-                  value={settings.hoverAccentColor}
-                  disabled={isCustomCursor}
-                  onChange={(event) =>
-                    updateSetting("hoverAccentColor", event.target.value)
-                  }
-                />
-              </label>
-            </div>
-            {isCustomCursor ? (
-              <p className={styles.helperText}>
-                Color controls apply to built-in cursors only.
-              </p>
-            ) : null}
-            <p className={styles.helperText}>
-              Uses native CSS cursors for zero impact on page speed.
+            <h2>Cursor Studio</h2>
+            <p className={styles.subhead}>
+              Choose a cursor and publish in seconds.
             </p>
           </div>
-        </div>
-      </div>
-
-        <div className={styles.footerBar}>
-          <button
-            className={styles.resetButton}
-            type="button"
-            onClick={() =>
-              setSettings((current) => ({
-                ...DEFAULT_SETTINGS,
-                savedCursors: current.savedCursors,
-              }))
-            }
-          >
-            Reset to default
-          </button>
-          <div className={styles.footerActions}>
+          <div className={styles.headerActions}>
             <span className={styles.storeBadge}>Store: {shop?.domain}</span>
+            <button
+              className={styles.resetButton}
+              type="button"
+              onClick={() =>
+                setSettings((current) => ({
+                  ...DEFAULT_SETTINGS,
+                  savedCursors: current.savedCursors,
+                }))
+              }
+            >
+              Reset
+            </button>
             <button
               className={styles.primaryButton}
               type="button"
@@ -1490,6 +1144,480 @@ export default function Index() {
             >
               {isSaving ? "Saving..." : "Save & Publish"}
             </button>
+          </div>
+        </div>
+
+        <div className={styles.studioGrid}>
+          <div className={styles.galleryPanel}>
+            <div className={styles.panelHeader}>
+              <div>
+                <h3>Cursor gallery</h3>
+                <p className={styles.panelSubhead}>
+                  Pick a cursor style to preview.
+                </p>
+              </div>
+              <div className={styles.panelTabs}>
+                <button
+                  type="button"
+                  className={`${styles.tabButton} ${
+                    activeTab === "gallery" ? styles.tabActive : ""
+                  }`}
+                  onClick={() => setActiveTab("gallery")}
+                >
+                  Gallery
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.tabButton} ${
+                    activeTab === "saved" ? styles.tabActive : ""
+                  }`}
+                  onClick={() => setActiveTab("saved")}
+                >
+                  Saved
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.tabButton} ${
+                    activeTab === "upload" ? styles.tabActive : ""
+                  }`}
+                  onClick={() => setActiveTab("upload")}
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+            {activeTab === "gallery" ? (
+              <>
+                <div className={styles.categoryRow}>
+                  <button
+                    type="button"
+                    className={`${styles.categoryButton} ${
+                      activeCategory === "all" ? styles.categoryActive : ""
+                    }`}
+                    onClick={() => setActiveCategory("all")}
+                  >
+                    All
+                  </button>
+                  {CURSOR_LIBRARY.map((category) => (
+                    <button
+                      key={category.id}
+                      type="button"
+                      className={`${styles.categoryButton} ${
+                        activeCategory === category.id
+                          ? styles.categoryActive
+                          : ""
+                      }`}
+                      onClick={() => setActiveCategory(category.id)}
+                    >
+                      {category.name}
+                    </button>
+                  ))}
+                </div>
+                <div className={styles.searchRow}>
+                  <input
+                    type="search"
+                    placeholder="Search cursors"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                  />
+                </div>
+              </>
+            ) : null}
+
+            {activeTab === "gallery" ? (
+              <>
+                <div className={styles.cursorGrid}>
+                  {galleryItems.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={`${styles.cursorTile} ${
+                        settings.preset === item.id ? styles.cursorActive : ""
+                      }`}
+                      onClick={() => applyCursorItem(item)}
+                    >
+                      {settings.preset === item.id ? (
+                        <span className={styles.selectedBadge}>✓</span>
+                      ) : null}
+                      <div className={styles.cursorIcons}>
+                        <span
+                          className={styles.cursorSvg}
+                          dangerouslySetInnerHTML={{ __html: item.previewSvg }}
+                        />
+                        <span
+                          className={styles.cursorSvg}
+                          dangerouslySetInnerHTML={{
+                            __html: item.previewHoverSvg,
+                          }}
+                        />
+                      </div>
+                      <span>{item.name}</span>
+                    </button>
+                  ))}
+                </div>
+                {!galleryItems.length ? (
+                  <p className={styles.helperText}>
+                    No cursors match that search yet.
+                  </p>
+                ) : null}
+              </>
+            ) : activeTab === "saved" ? (
+              <div className={styles.savedGrid}>
+                {settings.savedCursors.length ? (
+                  settings.savedCursors.map((saved) => (
+                    <div
+                      key={saved.id}
+                      className={`${styles.savedCard} ${
+                        settings.preset === "custom" &&
+                        settings.imageUrl === saved.imageUrl &&
+                        settings.hoverImageUrl === saved.hoverImageUrl
+                          ? styles.savedActive
+                          : ""
+                      }`}
+                    >
+                      {settings.preset === "custom" &&
+                      settings.imageUrl === saved.imageUrl &&
+                      settings.hoverImageUrl === saved.hoverImageUrl ? (
+                        <span className={styles.selectedBadge}>✓</span>
+                      ) : null}
+                      <div className={styles.savedHeader}>
+                        <span>{saved.name}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteSaved(saved.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                      <div className={styles.savedPreview}>
+                        <img
+                          src={saved.imageUrl}
+                          alt={`${saved.name} default`}
+                        />
+                        <img
+                          src={saved.hoverImageUrl}
+                          alt={`${saved.name} hover`}
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        className={styles.savedApply}
+                        onClick={() => applySavedCursor(saved)}
+                      >
+                        Use this cursor
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <p className={styles.helperText}>
+                    No saved cursors yet. Upload a cursor to build your library.
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className={styles.uploadPanel}>
+                <div className={styles.uploadBox}>
+                  <p>Paste URLs for your cursor images (PNG recommended).</p>
+                  <div className={styles.uploadInputs}>
+                    <input
+                      type="text"
+                      placeholder="Cursor name (optional)"
+                      value={uploadName}
+                      onChange={(event) => setUploadName(event.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Default cursor image URL"
+                      value={settings.imageUrl}
+                      onChange={(event) =>
+                        setSettings((current) => ({
+                          ...current,
+                          imageUrl: event.target.value,
+                          preset: "custom",
+                        }))
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Hover cursor image URL"
+                      value={settings.hoverImageUrl}
+                      onChange={(event) =>
+                        setSettings((current) => ({
+                          ...current,
+                          hoverImageUrl: event.target.value,
+                          preset: "custom",
+                        }))
+                      }
+                    />
+                  </div>
+                  <p className={styles.uploadNote}>
+                    Tip: Use a 32px PNG with a transparent background.
+                  </p>
+                  <button
+                    type="button"
+                    className={styles.primaryButton}
+                    onClick={handleSaveCursor}
+                  >
+                    Save to library
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className={styles.previewPanel}>
+            <div className={styles.previewHeader}>
+              <div>
+                <h3>Live preview</h3>
+              </div>
+              <span className={styles.previewHint}>
+                Move your mouse here to preview
+              </span>
+            </div>
+            <div
+              className={styles.previewCanvas}
+              style={previewStyle}
+              onMouseMove={handlePreviewMove}
+              onMouseLeave={() => setPreviewHover(false)}
+            >
+              <div className={styles.previewStage} ref={previewStageRef}>
+                <button type="button">Button</button>
+              </div>
+              {previewPresetSvg ? (
+                <span
+                  className={styles.previewSvg}
+                  style={previewCursorStyle}
+                  dangerouslySetInnerHTML={{
+                    __html: previewPresetSvg,
+                  }}
+                />
+              ) : settings.imageUrl ? (
+                <img
+                  className={styles.previewImage}
+                  style={previewCursorStyle}
+                  src={
+                    previewHover && settings.hoverImageUrl
+                      ? settings.hoverImageUrl
+                      : settings.imageUrl
+                  }
+                  alt="Cursor preview"
+                />
+              ) : (
+                <>
+                  <div
+                    className={styles.previewCursor}
+                    style={previewCursorStyle}
+                  />
+                  <div
+                    className={styles.previewRing}
+                    style={previewCursorStyle}
+                  />
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.settingsPanel}>
+            <div className={styles.panelHeader}>
+              <div>
+                <h3>Settings</h3>
+                <p className={styles.panelSubhead}>
+                  Tune sizes and colors.
+                </p>
+              </div>
+            </div>
+            <div className={styles.controlBlock}>
+              <div className={styles.toggleRow}>
+                <label className={styles.toggleSwitch}>
+                  <input
+                    type="checkbox"
+                    checked={settings.enabled}
+                    onChange={(event) =>
+                      updateSetting("enabled", event.target.checked)
+                    }
+                  />
+                  <span className={styles.toggleSlider} />
+                  <span className={styles.toggleLabelText}>
+                    Enable custom cursor
+                  </span>
+                </label>
+                <label className={styles.toggleSwitch}>
+                  <input
+                    type="checkbox"
+                    checked={settings.disableOnMobile}
+                    onChange={(event) =>
+                      updateSetting("disableOnMobile", event.target.checked)
+                    }
+                  />
+                  <span className={styles.toggleSlider} />
+                  <span className={styles.toggleLabelText}>
+                    Disable on mobile
+                  </span>
+                </label>
+              </div>
+              <div className={styles.settingsSection}>
+                <h4>Size</h4>
+                <div className={styles.sizeRow}>
+                  <span className={styles.sizeLabel}>Default cursor size</span>
+                  <div className={styles.sizeControl}>
+                    <input
+                      type="range"
+                      min={24}
+                      max={64}
+                      step={4}
+                      value={settings.size}
+                      onChange={(event) =>
+                        updateSetting("size", Number(event.target.value))
+                      }
+                    />
+                    <input
+                      type="number"
+                      min={24}
+                      max={64}
+                      step={4}
+                      value={settings.size}
+                      onChange={(event) =>
+                        updateSetting("size", Number(event.target.value))
+                      }
+                    />
+                  </div>
+                </div>
+                <div className={styles.sizeRow}>
+                  <span className={styles.sizeLabel}>Hover cursor size</span>
+                  <div className={styles.sizeControl}>
+                    <input
+                      type="range"
+                      min={24}
+                      max={64}
+                      step={4}
+                      value={settings.hoverSize}
+                      onChange={(event) =>
+                        updateSetting("hoverSize", Number(event.target.value))
+                      }
+                    />
+                    <input
+                      type="number"
+                      min={24}
+                      max={64}
+                      step={4}
+                      value={settings.hoverSize}
+                      onChange={(event) =>
+                        updateSetting("hoverSize", Number(event.target.value))
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={styles.settingsSection}>
+                <h4>Colors</h4>
+                <div className={styles.colorStack}>
+                  <div className={styles.colorField}>
+                    <span>Default color</span>
+                    <div className={styles.colorControl}>
+                      <input
+                        type="color"
+                        value={settings.defaultColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting("defaultColor", event.target.value)
+                        }
+                      />
+                      <input
+                        type="text"
+                        value={settings.defaultColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting("defaultColor", event.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.colorField}>
+                    <span>Accent color</span>
+                    <div className={styles.colorControl}>
+                      <input
+                        type="color"
+                        value={settings.defaultAccentColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting(
+                            "defaultAccentColor",
+                            event.target.value,
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        value={settings.defaultAccentColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting(
+                            "defaultAccentColor",
+                            event.target.value,
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.colorField}>
+                    <span>Hover color</span>
+                    <div className={styles.colorControl}>
+                      <input
+                        type="color"
+                        value={settings.hoverColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting("hoverColor", event.target.value)
+                        }
+                      />
+                      <input
+                        type="text"
+                        value={settings.hoverColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting("hoverColor", event.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.colorField}>
+                    <span>Hover accent</span>
+                    <div className={styles.colorControl}>
+                      <input
+                        type="color"
+                        value={settings.hoverAccentColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting(
+                            "hoverAccentColor",
+                            event.target.value,
+                          )
+                        }
+                      />
+                      <input
+                        type="text"
+                        value={settings.hoverAccentColor}
+                        disabled={isCustomCursor}
+                        onChange={(event) =>
+                          updateSetting(
+                            "hoverAccentColor",
+                            event.target.value,
+                          )
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {isCustomCursor ? (
+                <p className={styles.helperText}>
+                  Color controls apply to built-in cursors only.
+                </p>
+              ) : null}
+              <p className={styles.helperText}>
+                Uses native CSS cursors for zero impact on page speed.
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -4,9 +4,9 @@ export default function HelpPage() {
       <div className="fc-help-shell">
         <div className="fc-help-card">
           <div className="fc-help-header">
-            <h2>We're here to help</h2>
+            <h2>We&apos;re here to help</h2>
             <p>
-              If you have any questions or need assistance, please don't
+              If you have any questions or need assistance, please don&apos;t
               hesitate to email us at{" "}
               <s-link href="mailto:mianarsal01@gmail.com">
                 mianarsal01@gmail.com
@@ -39,13 +39,14 @@ export default function HelpPage() {
                     .
                   </li>
                   <li>
-                    In the left sidebar, look for the "App embeds" section.
+                    In the left sidebar, look for the &quot;App embeds&quot;
+                    section.
                   </li>
                   <li>
-                    Find "FourCore Cursor" in the list of app embeds and make
-                    sure the toggle is switched on.
+                    Find &quot;FourCore Cursor&quot; in the list of app embeds
+                    and make sure the toggle is switched on.
                   </li>
-                  <li>Click "Save" in the top right corner.</li>
+                  <li>Click &quot;Save&quot; in the top right corner.</li>
                 </ol>
                 <a
                   href="/admin/themes/current/editor?section=apps"
@@ -67,25 +68,28 @@ export default function HelpPage() {
               <ol>
                 <li>
                   First, upload your cursor images to Shopify. You can do this
-                  by going to "Content" &gt; "Files" in your Shopify admin and
-                  uploading your images there. We recommend using PNG images
-                  with a transparent background, around 32x32 pixels.
+                  by going to &quot;Content&quot; &gt; &quot;Files&quot; in your
+                  Shopify admin and uploading your images there. We recommend
+                  using PNG images with a transparent background, around 32x32
+                  pixels.
                 </li>
                 <li>Once uploaded, copy the URL of each image.</li>
                 <li>
-                  In the FourCore Cursor app, go to the "Upload your own" tab.
+                  In the FourCore Cursor app, go to the &quot;Upload your
+                  own&quot; tab.
                 </li>
                 <li>
-                  Paste the URLs for your "default" and "hover" cursor images
-                  into the corresponding fields.
+                  Paste the URLs for your &quot;default&quot; and
+                  &quot;hover&quot; cursor images into the corresponding
+                  fields.
                 </li>
                 <li>
-                  Give your cursor a name and click "Save to library".
+                  Give your cursor a name and click &quot;Save to library&quot;.
                 </li>
                 <li>
-                  Your saved cursor will now appear in the "Saved cursors" tab.
-                  Select it and click "Save & Publish" to apply it to your
-                  store.
+                  Your saved cursor will now appear in the &quot;Saved
+                  cursors&quot; tab. Select it and click &quot;Save &amp;
+                  Publish&quot; to apply it to your store.
                 </li>
               </ol>
             </details>
@@ -93,20 +97,22 @@ export default function HelpPage() {
             <h3>Troubleshooting</h3>
             <details>
               <summary>The custom cursor is not showing up.</summary>
-              <p>If the cursor isn't appearing, please check the following:</p>
+              <p>
+                If the cursor isn&apos;t appearing, please check the following:
+              </p>
               <ul>
                 <li>
-                  Make sure you have enabled the "FourCore Cursor" app embed in
-                  your theme editor, as described in the "Getting Started"
-                  section.
+                  Make sure you have enabled the &quot;FourCore Cursor&quot; app
+                  embed in your theme editor, as described in the &quot;Getting
+                  Started&quot; section.
                 </li>
                 <li>
-                  Ensure the "Enable custom cursor" checkbox is checked in the
-                  app's settings.
+                  Ensure the &quot;Enable custom cursor&quot; checkbox is
+                  checked in the app&apos;s settings.
                 </li>
                 <li>
-                  If you are on a mobile device, make sure "Disable on mobile"
-                  is not checked (or test on a desktop device).
+                  If you are on a mobile device, make sure &quot;Disable on
+                  mobile&quot; is not checked (or test on a desktop device).
                 </li>
                 <li>
                   Clear your browser cache, or try viewing your store in an
@@ -120,7 +126,8 @@ export default function HelpPage() {
                 For best results, we recommend using cursor images that are
                 32x32 pixels. If your image is a different size, the browser may
                 try to scale it, which can cause it to look blurry. You can
-                adjust the "Default cursor size" and "Hover cursor size"
+                adjust the &quot;Default cursor size&quot; and
+                &quot;Hover cursor size&quot;
                 settings in the app to fine-tune the appearance.
               </p>
             </details>

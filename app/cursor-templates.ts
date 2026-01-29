@@ -61,6 +61,17 @@ export type IconType =
   | "music-headphones"
   | "gaming-pad"
   | "gaming-joystick"
+  | "bw-arrow-classic"
+  | "bw-arrow-outline"
+  | "bw-arrow-bold"
+  | "bw-arrow-slim"
+  | "bw-crosshair"
+  | "bw-hand"
+  | "bw-hand-solid"
+  | "bw-hand-outline"
+  | "bw-hand-click"
+  | "bw-hand-spark"
+  | "bw-hand-press"
   | "snowflake"
   | "mitten"
   | "valentine-heart"
@@ -193,6 +204,19 @@ export const CURSOR_TEMPLATES: Record<string, CursorTemplate> = {
     icon: "pixel-arrow",
     hoverIcon: "pixel-hand",
   },
+  "bw-classic": {
+    kind: "icon",
+    icon: "bw-arrow-classic",
+    hoverIcon: "bw-hand-solid",
+  },
+  "bw-outline": {
+    kind: "icon",
+    icon: "bw-arrow-outline",
+    hoverIcon: "bw-hand-outline",
+  },
+  "bw-bold": { kind: "icon", icon: "bw-arrow-bold", hoverIcon: "bw-hand-click" },
+  "bw-slim": { kind: "icon", icon: "bw-arrow-slim", hoverIcon: "bw-hand-spark" },
+  "bw-target": { kind: "icon", icon: "bw-crosshair", hoverIcon: "bw-hand-press" },
   "season-winter": { kind: "icon", icon: "snowflake", hoverIcon: "snowman" },
   "season-valentine": {
     kind: "icon",
@@ -551,6 +575,8 @@ export const iconSvg = (
     shape = `<g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="52"/><line x1="12" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="46" y2="46"/><line x1="46" y1="18" x2="18" y2="46"/></g><circle cx="32" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="1.6"/>`;
   } else if (type === "snowman") {
     shape = `<circle cx="32" cy="38" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="32" cy="24" r="7" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="29" cy="22" r="1.5" fill="${accent}"/><circle cx="35" cy="22" r="1.5" fill="${accent}"/><path d="M30 27h4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><rect x="24" y="12" width="16" height="6" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><path d="M24 30h16" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "mitten") {
+    shape = `<path d="M20 18c-6 6-6 20 0 28 4 4 14 4 18 0 2-2 2-6 0-8l-4-4V18c0-4-4-8-8-8-2 0-4 2-6 4z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M34 28h10c4 0 6 8 2 12-2 2-6 2-8 0" fill="${accent}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
   } else if (type === "valentine-heart") {
     shape = `<path d="M32 46s-12-8-14-16c-2-8 8-14 14-6 6-8 16-2 14 6-2 8-14 16-14 16z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M26 24h12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
   } else if (type === "valentine-rose") {
@@ -623,22 +649,28 @@ export const iconSvg = (
     shape = `<rect x="18" y="26" width="28" height="16" rx="8" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="26" cy="34" r="3" fill="${accent}"/><circle cx="38" cy="34" r="3" fill="${accent}"/><path d="M30 30h4M32 28v4" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
   } else if (type === "gaming-joystick") {
     shape = `<rect x="24" y="34" width="16" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="30" y="22" width="4" height="12" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><circle cx="32" cy="20" r="5" fill="${fill}" stroke="#111827" stroke-width="2"/>`;
-  } else if (type === "snowflake") {
-    shape = `<g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="52"/><line x1="12" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="46" y2="46"/><line x1="46" y1="18" x2="18" y2="46"/></g><circle cx="32" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="1.6"/>`;
-  } else if (type === "mitten") {
-    shape = `<path d="M20 18c-6 6-6 20 0 28 4 4 14 4 18 0 2-2 2-6 0-8l-4-4V18c0-4-4-8-8-8-2 0-4 2-6 4z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M34 28h10c4 0 6 8 2 12-2 2-6 2-8 0" fill="${accent}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
-  } else if (type === "valentine-heart") {
-    shape = `<path d="M32 46s-12-8-14-16c-2-8 8-14 14-6 6-8 16-2 14 6-2 8-14 16-14 16z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M26 24h12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
-  } else if (type === "valentine-rose") {
-    shape = `<circle cx="32" cy="26" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M32 18c4 2 6 6 4 10" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><path d="M32 36v12" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M28 42c-4 0-6 4-6 8 6 2 10 0 12-4" fill="${accent}" stroke="#111827" stroke-width="1.6" stroke-linejoin="round"/>`;
-  } else if (type === "summer-sun") {
-    shape = `<circle cx="32" cy="32" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="18"/><line x1="32" y1="46" x2="32" y2="52"/><line x1="12" y1="32" x2="18" y2="32"/><line x1="46" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="22" y2="22"/><line x1="42" y1="42" x2="46" y2="46"/><line x1="42" y1="22" x2="46" y2="18"/><line x1="18" y1="46" x2="22" y2="42"/></g>`;
-  } else if (type === "summer-sunglasses") {
-    shape = `<rect x="16" y="26" width="14" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="34" y="26" width="14" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M30 30h4" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M14 28c2-4 6-6 10-6M50 28c-2-4-6-6-10-6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
-  } else if (type === "halloween-pumpkin") {
-    shape = `<ellipse cx="32" cy="32" rx="14" ry="12" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M20 32c2 8 8 12 12 12s10-4 12-12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><path d="M32 18c-2 2-2 6 0 8" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M26 30l4 4-4 4M38 30l-4 4 4 4" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-  } else if (type === "halloween-ghost") {
-    shape = `<path d="M20 46c0-16 8-22 12-22s12 6 12 22l-4-2-4 2-4-2-4 2-4-2-4 2z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="28" cy="30" r="2" fill="${accent}"/><circle cx="36" cy="30" r="2" fill="${accent}"/>`;
+  } else if (type === "bw-arrow-classic") {
+    shape = `<g transform="scale(2.6666667)"><path d="M17.2607 12.4008C19.3774 11.2626 20.4357 10.6935 20.7035 10.0084C20.9359 9.41393 20.8705 8.74423 20.5276 8.20587C20.1324 7.58551 18.984 7.23176 16.6872 6.52425L8.00612 3.85014C6.06819 3.25318 5.09923 2.95471 4.45846 3.19669C3.90068 3.40733 3.46597 3.85584 3.27285 4.41993C3.051 5.06794 3.3796 6.02711 4.03681 7.94545L6.94793 16.4429C7.75632 18.8025 8.16052 19.9824 8.80519 20.3574C9.36428 20.6826 10.0461 20.7174 10.6354 20.4507C11.3149 20.1432 11.837 19.0106 12.8813 16.7454L13.6528 15.0719C13.819 14.7113 13.9021 14.531 14.0159 14.3736C14.1168 14.2338 14.2354 14.1078 14.3686 13.9984C14.5188 13.8752 14.6936 13.7812 15.0433 13.5932L17.2607 12.4008Z" fill="${fill}" stroke="${accent}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  } else if (type === "bw-arrow-outline") {
+    shape = `<g transform="scale(2.6666667)"><path d="M9 4.94198C6.47561 4.02693 5.129 3.65381 4.39141 4.39141C3.55146 5.23136 4.15187 6.86106 5.3527 10.1205L7.3603 15.5696C7.96225 17.2035 8.26322 18.0204 8.92489 18.1658C9.58656 18.3111 10.2022 17.6955 11.4334 16.4643L12.6361 15.2616L16.5744 19.1999C16.9821 19.6077 17.186 19.8116 17.4135 19.9058C17.7168 20.0314 18.0575 20.0314 18.3608 19.9058C18.5882 19.8116 18.7921 19.6077 19.1999 19.1999C19.6077 18.7921 19.8116 18.5882 19.9058 18.3608C20.0314 18.0575 20.0314 17.7168 19.9058 17.4135C19.8116 17.186 19.6077 16.9821 19.1999 16.5744L15.2616 12.6361L16.4643 11.4334C17.6955 10.2022 18.3111 9.58656 18.1658 8.92489C18.0204 8.26322 17.2035 7.96225 15.5696 7.3603L13 6.41359" fill="none" stroke="${accent}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  } else if (type === "bw-arrow-bold") {
+    shape = `<g transform="scale(2.6666667)"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.4334 16.4643L12.6361 15.2616L15.2616 12.6361L16.4643 11.4334C17.6955 10.2022 18.3111 9.58656 18.1658 8.92489C18.0204 8.26322 17.2035 7.96225 15.5696 7.3603L10.1205 5.35271C6.86106 4.15187 5.23136 3.55146 4.39141 4.39141C3.55146 5.23136 4.15187 6.86106 5.3527 10.1205L7.3603 15.5696C7.96225 17.2035 8.26322 18.0204 8.92489 18.1658C9.58656 18.3111 10.2022 17.6955 11.4334 16.4643Z" fill="${fill}" stroke="${accent}" stroke-width="0.8" stroke-linejoin="round"/><path opacity="0.45" d="M12.6357 15.2618L16.574 19.2001C16.9818 19.6079 17.1857 19.8117 17.4132 19.906C17.7164 20.0316 18.0572 20.0316 18.3605 19.906C18.5879 19.8117 18.7918 19.6078 19.1996 19.2001C19.6074 18.7923 19.8113 18.5884 19.9055 18.3609C20.0311 18.0577 20.0311 17.7169 19.9055 17.4137C19.8113 17.1862 19.6074 16.9823 19.1996 16.5745L15.2613 12.6362L12.6357 15.2618Z" fill="${accent}"/></g>`;
+  } else if (type === "bw-arrow-slim") {
+    shape = `<g transform="scale(2.6666667)"><path d="M12.6361 15.2616L11.4334 16.4643C10.2022 17.6955 9.58656 18.3111 8.92489 18.1658C8.26322 18.0204 7.96225 17.2035 7.3603 15.5696L5.3527 10.1205C4.15187 6.86106 3.55146 5.23136 4.39141 4.39141C5.23136 3.55146 6.86106 4.15187 10.1205 5.35271L15.5696 7.3603C17.2035 7.96225 18.0204 8.26322 18.1658 8.92489C18.3111 9.58656 17.6955 10.2022 16.4643 11.4334L15.2616 12.6361" fill="none" stroke="${accent}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path opacity="0.5" d="M12.636 15.2618L16.5743 19.2001C16.9821 19.6079 17.186 19.8117 17.4134 19.906C17.7167 20.0316 18.0574 20.0316 18.3607 19.906C18.5882 19.8117 18.792 19.6078 19.1998 19.2001C19.6076 18.7923 19.8115 18.5884 19.9057 18.3609C20.0313 18.0577 20.0313 17.7169 19.9057 17.4137C19.8115 17.1862 19.6076 16.9823 19.1998 16.5745L15.2615 12.6362" stroke="${accent}" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  } else if (type === "bw-crosshair") {
+    shape = `<g transform="scale(2.6666667)"><path d="M12.5266 12.5324L20 20M19.0117 9.81874L12.8083 12.3731C12.6945 12.4199 12.6377 12.4434 12.5895 12.4783C12.5468 12.5093 12.5093 12.5468 12.4783 12.5895C12.4434 12.6377 12.4199 12.6945 12.3731 12.8083L9.81874 19.0117C9.56565 19.6264 9.43911 19.9337 9.2675 20.0169C9.11884 20.0889 8.94417 20.0829 8.80082 20.0008C8.63535 19.906 8.53025 19.5907 8.32005 18.9601L3.50599 4.51792C3.34314 4.02937 3.26172 3.7851 3.31964 3.62265C3.37005 3.48129 3.48129 3.37005 3.62265 3.31964C3.7851 3.26172 4.02937 3.34314 4.51792 3.50599L18.9601 8.32005C19.5907 8.53025 19.906 8.63535 20.0008 8.80082C20.0829 8.94417 20.0889 9.11884 20.0169 9.2675C19.9337 9.43911 19.6264 9.56565 19.0117 9.81874Z" fill="none" stroke="${accent}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  } else if (type === "bw-hand") {
+    shape = `<g transform="scale(1.7777778)"><path d="M30.74,15.19a13.66,13.66,0,0,0-6.87-3.83A26,26,0,0,0,18,10.58V5.28A3.4,3.4,0,0,0,14.5,2,3.4,3.4,0,0,0,11,5.28v10L9.4,13.7a3.77,3.77,0,0,0-5.28,0A3.67,3.67,0,0,0,3,16.33a3.6,3.6,0,0,0,1,2.56l4.66,5.52a11.53,11.53,0,0,0,1.43,4,10.12,10.12,0,0,0,2,2.54v1.92a1.07,1.07,0,0,0,1,1.08H27a1.07,1.07,0,0,0,1-1.08v-2.7a12.81,12.81,0,0,0,3-8.36v-6A1,1,0,0,0,30.74,15.19ZM29,21.86a10.72,10.72,0,0,1-2.6,7.26,1.11,1.11,0,0,0-.4.72V32H14.14V30.52a1,1,0,0,0-.44-.83,7.26,7.26,0,0,1-1.82-2.23,9.14,9.14,0,0,1-1.2-3.52,1,1,0,0,0-.23-.59L5.53,17.53a1.7,1.7,0,0,1,0-2.42,1.76,1.76,0,0,1,2.47,0l3,3v3.14l2-1V5.28A1.42,1.42,0,0,1,14.5,4,1.42,1.42,0,0,1,16,5.28v11.8l2,.43V12.59a24.27,24.27,0,0,1,2.51.18V18l1.6.35V13c.41.08.83.17,1.26.28a14.88,14.88,0,0,1,1.53.49v5.15l1.6.35V14.5A11.06,11.06,0,0,1,29,16.23Z" fill="${accent}"/></g>`;
+  } else if (type === "bw-hand-solid") {
+    shape = `<g transform="scale(1.7777778)"><path d="M28.69,14.33v4.83l-2-.43V13.24a16.19,16.19,0,0,0-2.33-.84v5.82l-2-.43V12c-1.1-.18-2.18-.3-3.08-.36v5.51l-2-.43V11.48h0V4.34a2.53,2.53,0,0,0-2.6-2.43,2.53,2.53,0,0,0-2.6,2.43V17.27h0v2.59l-2,1V15.6L7.75,13.21a2.83,2.83,0,0,0-4,0,2.93,2.93,0,0,0,0,4.09l6,7.1a10.82,10.82,0,0,0,1.39,4.22,8.42,8.42,0,0,0,2.21,2.73v2.56H27.79V30.62a12.54,12.54,0,0,0,3-8.5v-6A10,10,0,0,0,28.69,14.33Z" fill="${fill}" stroke="${accent}" stroke-width="0.8" stroke-linejoin="round"/></g>`;
+  } else if (type === "bw-hand-outline") {
+    shape = `<g transform="scale(1.7777778)"><path d="M30.74,15.19a13.66,13.66,0,0,0-6.87-3.83A26,26,0,0,0,18,10.58V5.28A3.4,3.4,0,0,0,14.5,2,3.4,3.4,0,0,0,11,5.28v10L9.4,13.7a3.77,3.77,0,0,0-5.28,0A3.67,3.67,0,0,0,3,16.33a3.6,3.6,0,0,0,1,2.56l4.66,5.52a11.53,11.53,0,0,0,1.43,4,10.12,10.12,0,0,0,2,2.54v1.92a1.07,1.07,0,0,0,1,1.08H27a1.07,1.07,0,0,0,1-1.08v-2.7a12.81,12.81,0,0,0,3-8.36v-6A1,1,0,0,0,30.74,15.19ZM29,21.86a10.72,10.72,0,0,1-2.6,7.26,1.11,1.11,0,0,0-.4.72V32H14.14V30.52a1,1,0,0,0-.44-.83,7.26,7.26,0,0,1-1.82-2.23,9.14,9.14,0,0,1-1.2-3.52,1,1,0,0,0-.23-.59L5.53,17.53a1.7,1.7,0,0,1,0-2.42,1.76,1.76,0,0,1,2.47,0l3,3v3.14l2-1V5.28A1.42,1.42,0,0,1,14.5,4,1.42,1.42,0,0,1,16,5.28v11.8l2,.43V12.59a24.27,24.27,0,0,1,2.51.18V18l1.6.35V13c.41.08.83.17,1.26.28a14.88,14.88,0,0,1,1.53.49v5.15l1.6.35V14.5A11.06,11.06,0,0,1,29,16.23Z" fill="none" stroke="${accent}" stroke-width="0.9" stroke-linejoin="round"/><circle cx="18" cy="18" r="2" fill="${fill}"/></g>`;
+  } else if (type === "bw-hand-click") {
+    shape = `<g transform="scale(4)"><path d="M8 3V0H6V3H8Z" fill="${accent}"/><path d="M9.87868 12H7V15H10.6109C13.5872 15 16 12.5872 16 9.61091C16 8.18164 15.4322 6.8109 14.4216 5.80025L13.3322 4.71088L8.8322 6.71088L6.56066 4.43934L4.43934 6.56066L9.87868 12Z" fill="${fill}"/><path d="M0 6H3V8H0V6Z" fill="${accent}"/><path d="M3.29289 4.70711L0.792893 2.20711L2.20711 0.792893L4.70711 3.29289L3.29289 4.70711Z" fill="${accent}"/></g>`;
+  } else if (type === "bw-hand-spark") {
+    shape = `<g transform="scale(2.6666667)"><path d="M20 21V19C20 16.7909 18.2091 15 16 15H15C14.4477 15 14 14.5523 14 14V9C14 7.89543 13.1046 7 12 7V7C10.8954 7 10 7.89543 10 9V18L7.6 14.8C7.22229 14.2964 6.62951 14 6 14H5.56619C4.70121 14 4 14.7012 4 15.5662V15.5662C4 15.8501 4.07715 16.1286 4.22319 16.372L7 21" fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/><path d="M12 4V3" fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/><path d="M18 10L19 10" fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/><path d="M5 10L6 10" fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/><path d="M7.34334 5.34309L6.63623 4.63599" fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/><path d="M16.6567 5.34309L17.3638 4.63599" fill="none" stroke="${accent}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/><circle cx="12" cy="15" r="2" fill="${fill}"/></g>`;
+  } else if (type === "bw-hand-press") {
+    shape = `<rect x="22" y="26" width="20" height="20" rx="6" fill="${fill}" stroke="${accent}" stroke-width="1.3"/><rect x="22" y="14" width="6" height="14" rx="3" fill="${fill}" stroke="${accent}" stroke-width="1.3"/><rect x="28" y="10" width="6" height="18" rx="3" fill="${fill}" stroke="${accent}" stroke-width="1.3"/><rect x="34" y="12" width="6" height="16" rx="3" fill="${fill}" stroke="${accent}" stroke-width="1.3"/><rect x="40" y="16" width="6" height="12" rx="3" fill="${fill}" stroke="${accent}" stroke-width="1.3"/><path d="M16 20l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="${accent}"/>`;
   } else if (type === "crewmate-cinema") {
     shape = crewmateScale(`${crewmateBase}${popcornBucket}`);
   } else if (type === "crewmate-cinema-popcorn") {

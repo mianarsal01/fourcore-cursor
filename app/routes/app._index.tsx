@@ -41,10 +41,6 @@ type CursorSettings = {
   savedCursors: SavedCursor[];
 };
 
-type ShopSummary = {
-  domain: string;
-};
-
 const DEFAULT_SETTINGS: CursorSettings = {
   enabled: true,
   preset: "cartoon-bag",
@@ -821,6 +817,177 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           name: "Power Bolt",
           imageUrl: "premium-bolt",
           hoverImageUrl: "premium-bolt-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+    ],
+  },
+  {
+    id: "mono",
+    name: "B&W",
+    items: [
+      (() => {
+        const defaultColor = "#ffffff";
+        const defaultAccentColor = "#111111";
+        const hoverColor = "#ffffff";
+        const hoverAccentColor = "#111111";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bw-arrow-classic",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "bw-hand-solid",
+        );
+        return {
+          id: "bw-classic",
+          name: "Orbit Pointer",
+          imageUrl: "bw-classic",
+          hoverImageUrl: "bw-classic-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#ffffff";
+        const defaultAccentColor = "#111111";
+        const hoverColor = "#ffffff";
+        const hoverAccentColor = "#111111";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bw-arrow-outline",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "bw-hand-outline",
+        );
+        return {
+          id: "bw-outline",
+          name: "Pivot Pointer",
+          imageUrl: "bw-outline",
+          hoverImageUrl: "bw-outline-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#111111";
+        const defaultAccentColor = "#ffffff";
+        const hoverColor = "#ffffff";
+        const hoverAccentColor = "#111111";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bw-arrow-bold",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "bw-hand-click",
+        );
+        return {
+          id: "bw-bold",
+          name: "Solid Pointer",
+          imageUrl: "bw-bold",
+          hoverImageUrl: "bw-bold-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#ffffff";
+        const defaultAccentColor = "#111111";
+        const hoverColor = "#ffffff";
+        const hoverAccentColor = "#111111";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bw-arrow-slim",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "bw-hand-spark",
+        );
+        return {
+          id: "bw-slim",
+          name: "Wire Pointer",
+          imageUrl: "bw-slim",
+          hoverImageUrl: "bw-slim-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#ffffff";
+        const defaultAccentColor = "#111111";
+        const hoverColor = "#ffffff";
+        const hoverAccentColor = "#111111";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bw-crosshair",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "bw-hand-press",
+        );
+        return {
+          id: "bw-target",
+          name: "Vector Pointer",
+          imageUrl: "bw-target",
+          hoverImageUrl: "bw-target-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 32,
@@ -2066,6 +2233,9 @@ export default function Index() {
   const [previewHover, setPreviewHover] = useState(false);
   const [uploadName, setUploadName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
   const previewStageRef = useRef<HTMLDivElement | null>(null);
 
   const previewStyle = useMemo(
@@ -2126,6 +2296,14 @@ export default function Index() {
       item.name.toLowerCase().includes(normalizedQuery),
     );
   }, [activeCategory, searchTerm]);
+
+  const shouldCollapse =
+    activeCategory === "all" && searchTerm.trim().length === 0;
+  const isExpanded = shouldCollapse
+    ? Boolean(expandedCategories[activeCategory])
+    : true;
+  const displayedItems =
+    shouldCollapse && !isExpanded ? galleryItems.slice(0, 12) : galleryItems;
 
   const isSaving =
     ["loading", "submitting"].includes(fetcher.state) &&
@@ -2343,7 +2521,7 @@ export default function Index() {
             {activeTab === "gallery" ? (
               <>
                 <div className={styles.cursorGrid}>
-                  {galleryItems.map((item) => (
+                  {displayedItems.map((item) => (
                     <button
                       key={item.id}
                       type="button"
@@ -2371,6 +2549,22 @@ export default function Index() {
                     </button>
                   ))}
                 </div>
+                {shouldCollapse && galleryItems.length > 12 ? (
+                  <div className={styles.showMoreWrap}>
+                    <button
+                      type="button"
+                      className={styles.showMoreButton}
+                      onClick={() =>
+                        setExpandedCategories((current) => ({
+                          ...current,
+                          [activeCategory]: !isExpanded,
+                        }))
+                      }
+                    >
+                      {isExpanded ? "Show less" : "Show more"}
+                    </button>
+                  </div>
+                ) : null}
                 {!galleryItems.length ? (
                   <p className={styles.helperText}>
                     No cursors match that search yet.

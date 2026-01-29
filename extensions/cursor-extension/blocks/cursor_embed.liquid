@@ -43,47 +43,47 @@
 {% endif %}
 
 {% if enabled_value == true or enabled_value == "true" %}
-  <style id="fourcore-cursor-style">
-    * {
-      cursor: inherit !important;
-    }
-
-    html, body, label {
-      cursor: url("{{ default_url }}") 0 0, auto !important;
-    }
-
-    a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
-      cursor: url("{{ hover_url }}") 0 0, auto !important;
-    }
-
-    html::before,
-    html::after {
-      content: "";
-      position: fixed;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    html::before {
-      background-image: url("{{ default_url }}");
-    }
-
-    html::after {
-      background-image: url("{{ hover_url }}");
-    }
-
-    {% if disable_mobile_value == true or disable_mobile_value == "true" %}
-    @media (pointer: coarse) {
-      html, body, label,
-      a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
-        cursor: auto !important;
+    <style id="fourcore-cursor-style">
+      * {
+        cursor: inherit !important;
       }
-    }
-    {% endif %}
-  </style>
+
+      html, body, label {
+        cursor: url("{{ default_url }}") 0 0, auto !important;
+      }
+
+      a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
+        cursor: url("{{ hover_url }}") 0 0, auto !important;
+      }
+
+      html::before,
+      html::after {
+        content: "";
+        position: fixed;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      html::before {
+        background-image: url("{{ default_url }}");
+      }
+
+      html::after {
+        background-image: url("{{ hover_url }}");
+      }
+
+      {% if disable_mobile_value == true or disable_mobile_value == "true" %}
+      @media (pointer: coarse) {
+        html, body, label,
+        a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
+          cursor: auto !important;
+        }
+      }
+      {% endif %}
+    </style>
 {% endif %}
 
 {% schema %}

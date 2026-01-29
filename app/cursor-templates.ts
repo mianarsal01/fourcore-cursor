@@ -9,7 +9,10 @@ export type AccentType =
   | "leaf"
   | "leaf-spark"
   | "candy"
-  | "candy-bite";
+  | "candy-bite"
+  | "spark"
+  | "sun"
+  | "ball";
 
 export type IconType =
   | "cart"
@@ -20,6 +23,52 @@ export type IconType =
   | "leaf"
   | "pixel-arrow"
   | "pixel-hand"
+  | "snowflake"
+  | "snowman"
+  | "valentine-heart"
+  | "valentine-rose"
+  | "summer-sun"
+  | "summer-sunglasses"
+  | "halloween-pumpkin"
+  | "halloween-ghost"
+  | "cyber-chip"
+  | "cyber-circuit"
+  | "spring-flower"
+  | "spring-tulip"
+  | "autumn-leaf"
+  | "autumn-acorn"
+  | "newyear-firework"
+  | "newyear-spark"
+  | "holiday-candy"
+  | "holiday-spark"
+  | "sunset-sun"
+  | "sunset-spark"
+  | "sport-ball"
+  | "sport-spark"
+  | "electric-critter"
+  | "electric-charge"
+  | "explorer-hat"
+  | "explorer-compass"
+  | "ninja-fox"
+  | "ninja-smoke"
+  | "space-helmet"
+  | "space-jet"
+  | "slime"
+  | "slime-wand"
+  | "travel-plane"
+  | "travel-bag"
+  | "music-note"
+  | "music-headphones"
+  | "gaming-pad"
+  | "gaming-joystick"
+  | "snowflake"
+  | "mitten"
+  | "valentine-heart"
+  | "valentine-rose"
+  | "summer-sun"
+  | "summer-sunglasses"
+  | "halloween-pumpkin"
+  | "halloween-ghost"
   | "barber-clipper"
   | "barber-pole"
   | "coffee-bean"
@@ -36,6 +85,14 @@ export type IconType =
   | "beauty-mirror"
   | "apparel-shirt"
   | "apparel-hanger"
+  | "bikini-top"
+  | "flip-flop"
+  | "surfboard"
+  | "wave"
+  | "jewelry-ring"
+  | "jewelry-gem"
+  | "home-lamp"
+  | "home-plant"
   | "crewmate-cinema"
   | "crewmate-cinema-popcorn"
   | "crewmate-saboteur"
@@ -55,6 +112,12 @@ export type CursorTemplate =
       kind: "icon";
       icon: IconType;
       hoverIcon?: IconType;
+      fixedColors?: {
+        fill: string;
+        accent: string;
+        hoverFill?: string;
+        hoverAccent?: string;
+      };
     };
 
 const hexToRgb = (hex: string) => {
@@ -81,6 +144,8 @@ const mixHex = (from: string, to: string, ratio: number) => {
     start.b + (end.b - start.b) * ratio,
   );
 };
+
+let svgInstance = 0;
 
 export const CURSOR_TEMPLATES: Record<string, CursorTemplate> = {
   "cartoon-bag": { kind: "cursor", accent: "box", hoverAccent: "box-open" },
@@ -123,26 +188,35 @@ export const CURSOR_TEMPLATES: Record<string, CursorTemplate> = {
   "premium-star": { kind: "icon", icon: "star" },
   "premium-leaf": { kind: "icon", icon: "leaf" },
   "premium-bolt": { kind: "icon", icon: "bolt" },
-  "premium-pixel-violet": {
-    kind: "icon",
-    icon: "pixel-arrow",
-    hoverIcon: "pixel-hand",
-  },
-  "premium-pixel-mint": {
-    kind: "icon",
-    icon: "pixel-arrow",
-    hoverIcon: "pixel-hand",
-  },
   "premium-pixel-sunset": {
     kind: "icon",
     icon: "pixel-arrow",
     hoverIcon: "pixel-hand",
   },
-  "premium-pixel-neon": {
+  "season-winter": { kind: "icon", icon: "snowflake", hoverIcon: "snowman" },
+  "season-valentine": {
     kind: "icon",
-    icon: "pixel-arrow",
-    hoverIcon: "pixel-hand",
+    icon: "valentine-heart",
+    hoverIcon: "valentine-rose",
   },
+  "season-summer": { kind: "icon", icon: "summer-sun", hoverIcon: "summer-sunglasses" },
+  "season-halloween": {
+    kind: "icon",
+    icon: "halloween-pumpkin",
+    hoverIcon: "halloween-ghost",
+  },
+  "season-cyber": { kind: "icon", icon: "cyber-chip", hoverIcon: "cyber-circuit" },
+  "season-spring": { kind: "icon", icon: "spring-flower", hoverIcon: "spring-tulip" },
+  "season-autumn": { kind: "icon", icon: "autumn-leaf", hoverIcon: "autumn-acorn" },
+  "season-newyear": { kind: "icon", icon: "newyear-firework", hoverIcon: "newyear-spark" },
+  "commerce-travel": { kind: "icon", icon: "travel-plane", hoverIcon: "travel-bag" },
+  "commerce-music": { kind: "icon", icon: "music-note", hoverIcon: "music-headphones" },
+  "premium-gaming": { kind: "icon", icon: "gaming-pad", hoverIcon: "gaming-joystick" },
+  "cartoon-electric": { kind: "icon", icon: "electric-critter", hoverIcon: "electric-charge" },
+  "cartoon-explorer": { kind: "icon", icon: "explorer-hat", hoverIcon: "explorer-compass" },
+  "cartoon-ninja": { kind: "icon", icon: "ninja-fox", hoverIcon: "ninja-smoke" },
+  "cartoon-space": { kind: "icon", icon: "space-helmet", hoverIcon: "space-jet" },
+  "cartoon-slime": { kind: "icon", icon: "slime", hoverIcon: "slime-wand" },
   "commerce-luxe": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
   "commerce-tech": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
   "commerce-min": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
@@ -187,9 +261,33 @@ export const CURSOR_TEMPLATES: Record<string, CursorTemplate> = {
     icon: "apparel-shirt",
     hoverIcon: "apparel-hanger",
   },
-  "season-holiday": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
-  "season-sun": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
-  "season-sport": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
+  "commerce-bikini": {
+    kind: "icon",
+    icon: "bikini-top",
+    hoverIcon: "flip-flop",
+  },
+  "commerce-surf": {
+    kind: "icon",
+    icon: "surfboard",
+    hoverIcon: "wave",
+  },
+  "commerce-jewelry": {
+    kind: "icon",
+    icon: "jewelry-ring",
+    hoverIcon: "jewelry-gem",
+  },
+  "commerce-home": {
+    kind: "icon",
+    icon: "home-lamp",
+    hoverIcon: "home-plant",
+  },
+  "season-holiday": {
+    kind: "icon",
+    icon: "holiday-candy",
+    hoverIcon: "holiday-spark",
+  },
+  "season-sun": { kind: "icon", icon: "sunset-sun", hoverIcon: "sunset-spark" },
+  "season-sport": { kind: "icon", icon: "sport-ball", hoverIcon: "sport-spark" },
 };
 
 const accentSvg = (type: AccentType, color: string) => {
@@ -211,9 +309,15 @@ const accentSvg = (type: AccentType, color: string) => {
     case "leaf-spark":
       return `<path d="M38 46c0-5 5-9 12-9-1 8-5 14-12 14-3 0-5-2-5-5z" fill="${color}" stroke="#111827" stroke-width="1.4" stroke-linejoin="round"/><path d="M50 38l1.2 2.6 2.6 1.2-2.6 1.2-1.2 2.6-1.2-2.6-2.6-1.2 2.6-1.2z" fill="#fff" stroke="#111827" stroke-width="0.9"/>`;
     case "candy":
-      return `<rect x="41" y="42" width="10" height="6" rx="2" fill="${color}" stroke="#111827" stroke-width="1.4"/><path d="M41 45l-3-3 3-3M51 45l3-3-3-3" stroke="#111827" stroke-width="1.2" stroke-linecap="round"/>`;
+      return `<rect x="36" y="38" width="16" height="10" rx="3" fill="${color}" stroke="#111827" stroke-width="1.6"/><path d="M36 43l-4-4 4-4M52 43l4-4-4-4" stroke="#111827" stroke-width="1.4" stroke-linecap="round"/>`;
     case "candy-bite":
       return `<rect x="41" y="42" width="10" height="6" rx="2" fill="${color}" stroke="#111827" stroke-width="1.4"/><path d="M41 45l-3-3 3-3M51 45l3-3-3-3" stroke="#111827" stroke-width="1.2" stroke-linecap="round"/><circle cx="52.5" cy="42.5" r="2" fill="#fff" stroke="#111827" stroke-width="0.9"/>`;
+    case "spark":
+      return `<path d="M44 34l3.2 7.2 7.2 3.2-7.2 3.2-3.2 7.2-3.2-7.2-7.2-3.2 7.2-3.2z" fill="${color}" stroke="#111827" stroke-width="1.3" stroke-linejoin="round"/>`;
+    case "sun":
+      return `<circle cx="44" cy="44" r="7" fill="${color}" stroke="#111827" stroke-width="1.4"/><g stroke="#111827" stroke-width="1.2" stroke-linecap="round"><line x1="44" y1="32" x2="44" y2="36"/><line x1="44" y1="52" x2="44" y2="56"/><line x1="32" y1="44" x2="36" y2="44"/><line x1="52" y1="44" x2="56" y2="44"/><line x1="36" y1="36" x2="38.5" y2="38.5"/><line x1="51.5" y1="51.5" x2="54" y2="54"/><line x1="51.5" y1="36.5" x2="54" y2="34"/><line x1="36.5" y1="51.5" x2="34" y2="54"/></g>`;
+    case "ball":
+      return `<circle cx="44" cy="44" r="7" fill="${color}" stroke="#111827" stroke-width="1.4"/><path d="M39 42c3 4 7 4 10 0M40 47c2 2 6 2 9 0" stroke="#111827" stroke-width="1" stroke-linecap="round"/>`;
     case "dot":
     default:
       return `<circle cx="44" cy="46" r="6" fill="${color}"/>`;
@@ -230,8 +334,14 @@ export const cursorSvg = (
     accent,
   )}</svg>`;
 
-export const iconSvg = (type: IconType, fill: string, accent: string) => {
+export const iconSvg = (
+  type: IconType,
+  fill: string,
+  accent: string,
+  idToken = "",
+) => {
   let shape = "";
+  const token = idToken ? `-${idToken}` : "";
   const crewmateBase = `
     <rect x="20" y="14" width="24" height="32" rx="12" fill="${fill}" stroke="#111827" stroke-width="2"/>
     <rect x="20" y="40" width="10" height="12" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/>
@@ -283,20 +393,22 @@ export const iconSvg = (type: IconType, fill: string, accent: string) => {
     [12, 46],
   ];
   const pixelHand = [
-    [16, 18],
-    [28, 18],
-    [28, 12],
-    [34, 12],
-    [34, 18],
-    [40, 18],
-    [40, 14],
-    [48, 14],
-    [48, 22],
-    [42, 22],
-    [42, 48],
-    [24, 48],
-    [24, 38],
-    [16, 38],
+    [14, 20],
+    [24, 20],
+    [24, 12],
+    [30, 12],
+    [30, 20],
+    [36, 20],
+    [36, 14],
+    [42, 14],
+    [42, 20],
+    [48, 20],
+    [48, 28],
+    [40, 28],
+    [40, 48],
+    [22, 48],
+    [22, 36],
+    [14, 36],
   ];
   const toPoints = (points: number[][]) =>
     points.map(([x, y]) => `${x},${y}`).join(" ");
@@ -304,18 +416,19 @@ export const iconSvg = (type: IconType, fill: string, accent: string) => {
     points.map(([x, y]) => `${x + dx},${y + dy}`).join(" ");
   const pixel3d = (points: number[][], id: string) => {
     const highlight = mixHex(fill, "#ffffff", 0.35);
-    const midShadow = mixHex(fill, accent, 0.5);
-    const deepShadow = mixHex(accent, "#000000", 0.2);
+    const midShadow = mixHex(fill, "#00e5ff", 0.45);
+    const deepShadow = mixHex(fill, "#ff4fd8", 0.35);
+    const gradientId = `${id}${token}`;
     return `
     <defs>
-      <linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
+      <linearGradient id="${gradientId}" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="${highlight}"/>
         <stop offset="70%" stop-color="${fill}"/>
       </linearGradient>
     </defs>
     <polygon points="${offsetPoints(points, 6, 6)}" fill="${deepShadow}" opacity="0.95"/>
     <polygon points="${offsetPoints(points, 3, 3)}" fill="${midShadow}" opacity="0.85"/>
-    <polygon points="${toPoints(points)}" fill="url(#${id})" stroke="${accent}" stroke-width="2.4" stroke-linejoin="round"/>
+    <polygon points="${toPoints(points)}" fill="url(#${gradientId})" stroke="${accent}" stroke-width="2.4" stroke-linejoin="round"/>
     <path d="M${points[0][0] + 6} ${points[0][1] + 2}L${points[1][0] - 8} ${points[1][1] + 5}" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.4"/>
   `;
   };
@@ -395,10 +508,137 @@ export const iconSvg = (type: IconType, fill: string, accent: string) => {
     shape = commerceScale(
       `<path d="M32 18c2 0 4 2 4 4s-2 4-4 4" stroke="#111827" stroke-width="2" fill="none"/><path d="M16 32l16-8 16 8" stroke="${accent}" stroke-width="3" stroke-linecap="round"/><path d="M16 32l6 12h20l6-12" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`,
     );
+  } else if (type === "bikini-top") {
+    const outline = mixHex(accent, "#000000", 0.35);
+    const cupFill = mixHex(fill, "#ffffff", 0.12);
+    shape = commerceScale(
+      `<path d="M12 30c2-10 14-12 20 0-2 8-6 10-10 10s-8-4-10-10z" fill="${cupFill}" stroke="${outline}" stroke-width="2.4" stroke-linejoin="round"/><path d="M52 30c-2-10-14-12-20 0 2 8 6 10 10 10s8-4 10-10z" fill="${cupFill}" stroke="${outline}" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 26h16" stroke="${outline}" stroke-width="2.2" stroke-linecap="round"/><path d="M14 20c6 0 8 6 10 12" stroke="${outline}" stroke-width="2.2" stroke-linecap="round"/><path d="M50 20c-6 0-8 6-10 12" stroke="${outline}" stroke-width="2.2" stroke-linecap="round"/><path d="M18 46h28c-4 10-10 14-14 14s-10-4-14-14z" fill="${fill}" stroke="${outline}" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 48c2 3 5 4 8 4s6-1 8-4" stroke="${outline}" stroke-width="2" stroke-linecap="round"/>`,
+    );
+  } else if (type === "flip-flop") {
+    shape = commerceScale(
+      `<rect x="22" y="26" width="12" height="20" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="36" y="26" width="12" height="20" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M28 30l4 4M40 30l4 4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`,
+    );
+  } else if (type === "surfboard") {
+    const outline = mixHex(accent, "#000000", 0.55);
+    shape = commerceScale(
+      `<g transform="rotate(-20 32 32)"><path d="M28 6c12 14 12 44 0 58-12-14-12-44 0-58z" fill="${fill}" stroke="${outline}" stroke-width="2.6"/><path d="M24 20l8-5 8 5-3 20-5 10-5-10z" fill="${accent}" stroke="${outline}" stroke-width="2" stroke-linejoin="round"/><path d="M30 16l10 6" stroke="${outline}" stroke-width="2" stroke-linecap="round"/><path d="M26 46l6 10 6-10-3-2-3 2-3-2z" fill="${accent}" stroke="${outline}" stroke-width="2" stroke-linejoin="round"/><circle cx="28" cy="36" r="2.6" fill="#ffffff" opacity="0.7"/></g>`,
+    );
+  } else if (type === "wave") {
+    shape = commerceScale(
+      `<path d="M14 36c6-6 10-6 16 0 6 6 10 6 16 0" stroke="${accent}" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M18 44c4-4 8-4 12 0" stroke="${fill}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
+    );
+  } else if (type === "jewelry-ring") {
+    shape = commerceScale(
+      `<circle cx="32" cy="34" r="10" fill="none" stroke="${fill}" stroke-width="3"/><path d="M28 20h8l-4 6z" fill="${accent}" stroke="#111827" stroke-width="1.5"/>`,
+    );
+  } else if (type === "jewelry-gem") {
+    shape = commerceScale(
+      `<path d="M24 20h16l6 8-14 18-14-18z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M24 20l8 8 8-8" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`,
+    );
+  } else if (type === "home-lamp") {
+    shape = commerceScale(
+      `<path d="M22 26h20l-4-10H26z" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="30" y="26" width="4" height="12" fill="${accent}" stroke="#111827" stroke-width="1.6"/><rect x="24" y="38" width="16" height="6" rx="3" fill="#111827"/>`,
+    );
+  } else if (type === "home-plant") {
+    shape = commerceScale(
+      `<path d="M22 38h20l-4 10H26z" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M32 20c0 8-8 8-8 16M32 20c0 8 8 8 8 16" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`,
+    );
   } else if (type === "pixel-arrow") {
     shape = pixel3d(pixelArrow, "pixel-arrow-fill");
   } else if (type === "pixel-hand") {
     shape = pixel3d(pixelHand, "pixel-hand-fill");
+  } else if (type === "snowflake") {
+    shape = `<g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="52"/><line x1="12" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="46" y2="46"/><line x1="46" y1="18" x2="18" y2="46"/></g><circle cx="32" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="1.6"/>`;
+  } else if (type === "snowman") {
+    shape = `<circle cx="32" cy="38" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="32" cy="24" r="7" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="29" cy="22" r="1.5" fill="${accent}"/><circle cx="35" cy="22" r="1.5" fill="${accent}"/><path d="M30 27h4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><rect x="24" y="12" width="16" height="6" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><path d="M24 30h16" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "valentine-heart") {
+    shape = `<path d="M32 46s-12-8-14-16c-2-8 8-14 14-6 6-8 16-2 14 6-2 8-14 16-14 16z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M26 24h12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "valentine-rose") {
+    shape = `<circle cx="32" cy="26" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M32 18c4 2 6 6 4 10" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><path d="M32 36v12" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M28 42c-4 0-6 4-6 8 6 2 10 0 12-4" fill="${accent}" stroke="#111827" stroke-width="1.6" stroke-linejoin="round"/>`;
+  } else if (type === "summer-sun") {
+    shape = `<circle cx="32" cy="32" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="18"/><line x1="32" y1="46" x2="32" y2="52"/><line x1="12" y1="32" x2="18" y2="32"/><line x1="46" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="22" y2="22"/><line x1="42" y1="42" x2="46" y2="46"/><line x1="42" y1="22" x2="46" y2="18"/><line x1="18" y1="46" x2="22" y2="42"/></g>`;
+  } else if (type === "summer-sunglasses") {
+    shape = `<rect x="16" y="26" width="14" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="34" y="26" width="14" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M30 30h4" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M14 28c2-4 6-6 10-6M50 28c-2-4-6-6-10-6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "halloween-pumpkin") {
+    shape = `<ellipse cx="32" cy="32" rx="14" ry="12" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M20 32c2 8 8 12 12 12s10-4 12-12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><path d="M32 18c-2 2-2 6 0 8" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M26 30l4 4-4 4M38 30l-4 4 4 4" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  } else if (type === "halloween-ghost") {
+    shape = `<path d="M20 46c0-16 8-22 12-22s12 6 12 22l-4-2-4 2-4-2-4 2-4-2-4 2z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="28" cy="30" r="2" fill="${accent}"/><circle cx="36" cy="30" r="2" fill="${accent}"/>`;
+  } else if (type === "holiday-candy") {
+    shape = `<rect x="18" y="28" width="28" height="12" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M18 34l-6-6 6-6M46 34l6-6-6-6" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M24 28h16" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "holiday-spark") {
+    shape = `<path d="M32 14l4.5 10 10 4.5-10 4.5-4.5 10-4.5-10-10-4.5 10-4.5z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="44" cy="20" r="3" fill="${accent}"/><circle cx="20" cy="44" r="3" fill="${accent}"/>`;
+  } else if (type === "sunset-sun") {
+    shape = `<circle cx="32" cy="32" r="12" fill="${fill}" stroke="#111827" stroke-width="2"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="10" x2="32" y2="16"/><line x1="32" y1="48" x2="32" y2="54"/><line x1="10" y1="32" x2="16" y2="32"/><line x1="48" y1="32" x2="54" y2="32"/><line x1="18" y1="18" x2="22" y2="22"/><line x1="42" y1="42" x2="46" y2="46"/><line x1="42" y1="22" x2="46" y2="18"/><line x1="18" y1="46" x2="22" y2="42"/></g>`;
+  } else if (type === "sunset-spark") {
+    shape = `<path d="M32 18l3.5 8 8 3.5-8 3.5-3.5 8-3.5-8-8-3.5 8-3.5z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
+  } else if (type === "sport-ball") {
+    shape = `<circle cx="32" cy="32" r="12" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M24 30c3 4 9 4 12 0M24 36c3 3 9 3 12 0" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "sport-spark") {
+    shape = `<path d="M32 16l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M20 20l4 4M44 44l4 4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "electric-critter") {
+    shape = `<circle cx="28" cy="30" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="40" cy="30" r="8" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="26" cy="28" r="2" fill="${accent}"/><circle cx="38" cy="28" r="2" fill="${accent}"/><path d="M24 20l-6-6 8 2M44 20l6-6-8 2" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M30 36h8" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "electric-charge") {
+    shape = `<path d="M28 18l-6 10h8l-6 18 16-20h-8l6-8z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="44" cy="22" r="3" fill="${accent}"/><circle cx="20" cy="44" r="3" fill="${accent}"/>`;
+  } else if (type === "explorer-hat") {
+    shape = `<path d="M18 30c0-8 6-14 14-14s14 6 14 14H18z" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="14" y="30" width="36" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="2"/>`;
+  } else if (type === "explorer-compass") {
+    shape = `<circle cx="32" cy="32" r="12" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M32 22l4 10-10 4 4-10z" fill="${accent}" stroke="#111827" stroke-width="1.6" stroke-linejoin="round"/><circle cx="32" cy="32" r="2.2" fill="#111827"/>`;
+  } else if (type === "ninja-fox") {
+    shape = `<path d="M16 38l8-18 8 8 8-8 8 18-16 6z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><rect x="22" y="30" width="20" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="1.6"/><circle cx="26" cy="33" r="1.5" fill="#111827"/><circle cx="38" cy="33" r="1.5" fill="#111827"/>`;
+  } else if (type === "ninja-smoke") {
+    shape = `<circle cx="26" cy="36" r="7" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="38" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="32" cy="26" r="4" fill="${accent}" stroke="#111827" stroke-width="1.6"/>`;
+  } else if (type === "space-helmet") {
+    shape = `<path d="M20 34c0-10 8-18 12-18s12 8 12 18-8 14-12 14-12-4-12-14z" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="26" y="28" width="12" height="8" rx="4" fill="${accent}" stroke="#111827" stroke-width="1.6"/><path d="M24 40h16" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "space-jet") {
+    shape = `<path d="M16 38l18-8 14-2-6 10 6 10-14-2z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="34" cy="34" r="2.2" fill="${accent}"/><path d="M20 42l-6 6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "slime") {
+    shape = `<path d="M18 40c0-10 6-16 14-16s14 6 14 16-6 12-14 12-14-2-14-12z" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="28" cy="34" r="2" fill="${accent}"/><circle cx="36" cy="34" r="2" fill="${accent}"/><path d="M28 40c2 2 6 2 8 0" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "slime-wand") {
+    shape = `<path d="M22 40l10-10 6 6-10 10z" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M38 22l4 4M42 18l4 4M34 18l4 4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "cyber-chip") {
+    shape = `<rect x="20" y="20" width="24" height="24" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="26" y="26" width="12" height="12" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="12" y1="24" x2="20" y2="24"/><line x1="12" y1="32" x2="20" y2="32"/><line x1="12" y1="40" x2="20" y2="40"/><line x1="44" y1="24" x2="52" y2="24"/><line x1="44" y1="32" x2="52" y2="32"/><line x1="44" y1="40" x2="52" y2="40"/></g>`;
+  } else if (type === "cyber-circuit") {
+    shape = `<path d="M18 32h10l4-6 8 12h10" stroke="${accent}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="32" r="4" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="46" cy="38" r="5" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M30 20l6-6 6 6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "spring-flower") {
+    shape = `<circle cx="32" cy="32" r="6" fill="${accent}" stroke="#111827" stroke-width="1.6"/><g fill="${fill}" stroke="#111827" stroke-width="1.6"><circle cx="20" cy="32" r="6"/><circle cx="44" cy="32" r="6"/><circle cx="32" cy="20" r="6"/><circle cx="32" cy="44" r="6"/><circle cx="24" cy="24" r="6"/><circle cx="40" cy="24" r="6"/><circle cx="24" cy="40" r="6"/><circle cx="40" cy="40" r="6"/></g>`;
+  } else if (type === "spring-tulip") {
+    shape = `<path d="M22 36c6-8 14-8 20 0-2 8-6 12-10 12s-8-4-10-12z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M32 48v10" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M26 54c-4 0-6 4-6 8 6 2 10 0 12-4" fill="${accent}" stroke="#111827" stroke-width="1.6" stroke-linejoin="round"/>`;
+  } else if (type === "autumn-leaf") {
+    shape = `<path d="M20 44c12-2 22-12 24-24-12 2-22 12-24 24z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M24 40l12-12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "autumn-acorn") {
+    shape = `<path d="M22 30h20c0-8-4-12-10-12s-10 4-10 12z" fill="${accent}" stroke="#111827" stroke-width="2"/><path d="M24 30c0 10 4 16 8 16s8-6 8-16H24z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M30 18c-2-4 2-8 6-8" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "newyear-firework") {
+    shape = `<circle cx="32" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="1.6"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="10" x2="32" y2="18"/><line x1="32" y1="46" x2="32" y2="54"/><line x1="10" y1="32" x2="18" y2="32"/><line x1="46" y1="32" x2="54" y2="32"/><line x1="18" y1="18" x2="22" y2="22"/><line x1="42" y1="42" x2="46" y2="46"/><line x1="42" y1="22" x2="46" y2="18"/><line x1="18" y1="46" x2="22" y2="42"/></g>`;
+  } else if (type === "newyear-spark") {
+    shape = `<path d="M32 14l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="44" cy="20" r="3" fill="${accent}"/><circle cx="20" cy="44" r="3" fill="${accent}"/>`;
+  } else if (type === "travel-plane") {
+    shape = `<path d="M14 32l36-10-4 8 10 6-8 2 2 10-8-6-10 6 2-10-10-6z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
+  } else if (type === "travel-bag") {
+    shape = `<rect x="18" y="24" width="28" height="20" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M24 24c0-6 4-8 8-8s8 2 8 8" stroke="#111827" stroke-width="2" stroke-linecap="round"/><rect x="24" y="30" width="16" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="1.6"/>`;
+  } else if (type === "music-note") {
+    shape = `<path d="M24 18v20c0 4-6 6-8 2-1-3 2-6 6-5V22l18-4v16c0 4-6 6-8 2-1-3 2-6 6-5V20z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
+  } else if (type === "music-headphones") {
+    shape = `<path d="M18 32c0-8 6-14 14-14s14 6 14 14" stroke="#111827" stroke-width="2" fill="none"/><rect x="14" y="32" width="8" height="12" rx="3" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="42" y="32" width="8" height="12" rx="3" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M22 38h20" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "gaming-pad") {
+    shape = `<rect x="18" y="26" width="28" height="16" rx="8" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="26" cy="34" r="3" fill="${accent}"/><circle cx="38" cy="34" r="3" fill="${accent}"/><path d="M30 30h4M32 28v4" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "gaming-joystick") {
+    shape = `<rect x="24" y="34" width="16" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="30" y="22" width="4" height="12" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><circle cx="32" cy="20" r="5" fill="${fill}" stroke="#111827" stroke-width="2"/>`;
+  } else if (type === "snowflake") {
+    shape = `<g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="52"/><line x1="12" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="46" y2="46"/><line x1="46" y1="18" x2="18" y2="46"/></g><circle cx="32" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="1.6"/>`;
+  } else if (type === "mitten") {
+    shape = `<path d="M20 18c-6 6-6 20 0 28 4 4 14 4 18 0 2-2 2-6 0-8l-4-4V18c0-4-4-8-8-8-2 0-4 2-6 4z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M34 28h10c4 0 6 8 2 12-2 2-6 2-8 0" fill="${accent}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
+  } else if (type === "valentine-heart") {
+    shape = `<path d="M32 46s-12-8-14-16c-2-8 8-14 14-6 6-8 16-2 14 6-2 8-14 16-14 16z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M26 24h12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "valentine-rose") {
+    shape = `<circle cx="32" cy="26" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M32 18c4 2 6 6 4 10" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><path d="M32 36v12" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M28 42c-4 0-6 4-6 8 6 2 10 0 12-4" fill="${accent}" stroke="#111827" stroke-width="1.6" stroke-linejoin="round"/>`;
+  } else if (type === "summer-sun") {
+    shape = `<circle cx="32" cy="32" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="32" y1="12" x2="32" y2="18"/><line x1="32" y1="46" x2="32" y2="52"/><line x1="12" y1="32" x2="18" y2="32"/><line x1="46" y1="32" x2="52" y2="32"/><line x1="18" y1="18" x2="22" y2="22"/><line x1="42" y1="42" x2="46" y2="46"/><line x1="42" y1="22" x2="46" y2="18"/><line x1="18" y1="46" x2="22" y2="42"/></g>`;
+  } else if (type === "summer-sunglasses") {
+    shape = `<rect x="16" y="26" width="14" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="34" y="26" width="14" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M30 30h4" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M14 28c2-4 6-6 10-6M50 28c-2-4-6-6-10-6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "halloween-pumpkin") {
+    shape = `<ellipse cx="32" cy="32" rx="14" ry="12" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M20 32c2 8 8 12 12 12s10-4 12-12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/><path d="M32 18c-2 2-2 6 0 8" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M26 30l4 4-4 4M38 30l-4 4 4 4" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  } else if (type === "halloween-ghost") {
+    shape = `<path d="M20 46c0-16 8-22 12-22s12 6 12 22l-4-2-4 2-4-2-4 2-4-2-4 2z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="28" cy="30" r="2" fill="${accent}"/><circle cx="36" cy="30" r="2" fill="${accent}"/>`;
   } else if (type === "crewmate-cinema") {
     shape = crewmateScale(`${crewmateBase}${popcornBucket}`);
   } else if (type === "crewmate-cinema-popcorn") {
@@ -433,15 +673,25 @@ export const buildCursorSvg = (
   },
   hover: boolean,
 ) => {
+  const idToken = `i${svgInstance++}`;
   const template = CURSOR_TEMPLATES[preset];
   if (!template) {
     return null;
   }
   if (template.kind === "icon") {
     const icon = hover && template.hoverIcon ? template.hoverIcon : template.icon;
+    if (template.fixedColors) {
+      const fixedFill = hover
+        ? template.fixedColors.hoverFill || template.fixedColors.fill
+        : template.fixedColors.fill;
+      const fixedAccent = hover
+        ? template.fixedColors.hoverAccent || template.fixedColors.accent
+        : template.fixedColors.accent;
+      return iconSvg(icon, fixedFill, fixedAccent, idToken);
+    }
     return hover
-      ? iconSvg(icon, options.hoverFill, options.hoverAccent)
-      : iconSvg(icon, options.fill, options.accent);
+      ? iconSvg(icon, options.hoverFill, options.hoverAccent, idToken)
+      : iconSvg(icon, options.fill, options.accent, idToken);
   }
   const accentType = hover ? template.hoverAccent : template.accent;
   const fill = hover ? options.hoverFill : options.fill;

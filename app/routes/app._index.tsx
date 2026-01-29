@@ -134,7 +134,172 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "cartoon-bag-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#ffd166";
+        const defaultAccentColor = "#ff9f1c";
+        const hoverColor = "#ffb703";
+        const hoverAccentColor = "#ffd60a";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "electric-critter",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "electric-charge",
+        );
+        return {
+          id: "cartoon-electric",
+          name: "Spark Critter",
+          imageUrl: "cartoon-electric",
+          hoverImageUrl: "cartoon-electric-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#f59e0b";
+        const defaultAccentColor = "#fde68a";
+        const hoverColor = "#d97706";
+        const hoverAccentColor = "#fcd34d";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "explorer-hat",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "explorer-compass",
+        );
+        return {
+          id: "cartoon-explorer",
+          name: "Explorer Trail",
+          imageUrl: "cartoon-explorer",
+          hoverImageUrl: "cartoon-explorer-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#fb7185";
+        const defaultAccentColor = "#111827";
+        const hoverColor = "#f43f5e";
+        const hoverAccentColor = "#0f172a";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "ninja-fox",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "ninja-smoke",
+        );
+        return {
+          id: "cartoon-ninja",
+          name: "Ninja Fox",
+          imageUrl: "cartoon-ninja",
+          hoverImageUrl: "cartoon-ninja-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#38bdf8";
+        const defaultAccentColor = "#0f172a";
+        const hoverColor = "#22d3ee";
+        const hoverAccentColor = "#111827";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "space-helmet",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "space-jet",
+        );
+        return {
+          id: "cartoon-space",
+          name: "Space Pilot",
+          imageUrl: "cartoon-space",
+          hoverImageUrl: "cartoon-space-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#4ade80";
+        const defaultAccentColor = "#86efac";
+        const hoverColor = "#22c55e";
+        const hoverAccentColor = "#f472b6";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "slime",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "slime-wand",
+        );
+        return {
+          id: "cartoon-slime",
+          name: "Slime Buddy",
+          imageUrl: "cartoon-slime",
+          hoverImageUrl: "cartoon-slime-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -165,7 +330,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "cartoon-sale-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -196,7 +361,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "cartoon-heart-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -359,7 +524,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "cartoon-gift-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -390,7 +555,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "cartoon-green-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -421,7 +586,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "cartoon-sweet-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -468,72 +633,6 @@ const CURSOR_LIBRARY: CursorCategory[] = [
         };
       })(),
       (() => {
-        const defaultColor = "#8b5cf6";
-        const defaultAccentColor = "#5b21b6";
-        const hoverColor = "#6366f1";
-        const hoverAccentColor = "#7c3aed";
-        const base = buildPreviewSvg(
-          "icon",
-          defaultColor,
-          defaultAccentColor,
-          undefined,
-          "pixel-arrow",
-        );
-        const hover = buildPreviewSvg(
-          "icon",
-          hoverColor,
-          hoverAccentColor,
-          undefined,
-          "pixel-hand",
-        );
-        return {
-          id: "premium-pixel-violet",
-          name: "3D Pixel Violet",
-          imageUrl: "premium-pixel-violet",
-          hoverImageUrl: "premium-pixel-violet-hover",
-          previewSvg: base.markup,
-          previewHoverSvg: hover.markup,
-          size: 34,
-          defaultColor,
-          defaultAccentColor,
-          hoverColor,
-          hoverAccentColor,
-        };
-      })(),
-      (() => {
-        const defaultColor = "#a7f3d0";
-        const defaultAccentColor = "#0f766e";
-        const hoverColor = "#5eead4";
-        const hoverAccentColor = "#0f766e";
-        const base = buildPreviewSvg(
-          "icon",
-          defaultColor,
-          defaultAccentColor,
-          undefined,
-          "pixel-arrow",
-        );
-        const hover = buildPreviewSvg(
-          "icon",
-          hoverColor,
-          hoverAccentColor,
-          undefined,
-          "pixel-hand",
-        );
-        return {
-          id: "premium-pixel-mint",
-          name: "3D Pixel Mint",
-          imageUrl: "premium-pixel-mint",
-          hoverImageUrl: "premium-pixel-mint-hover",
-          previewSvg: base.markup,
-          previewHoverSvg: hover.markup,
-          size: 34,
-          defaultColor,
-          defaultAccentColor,
-          hoverColor,
-          hoverAccentColor,
-        };
-      })(),
-      (() => {
         const defaultColor = "#f59e0b";
         const defaultAccentColor = "#7c3aed";
         const hoverColor = "#fb7185";
@@ -557,39 +656,6 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           name: "3D Pixel Sunset",
           imageUrl: "premium-pixel-sunset",
           hoverImageUrl: "premium-pixel-sunset-hover",
-          previewSvg: base.markup,
-          previewHoverSvg: hover.markup,
-          size: 34,
-          defaultColor,
-          defaultAccentColor,
-          hoverColor,
-          hoverAccentColor,
-        };
-      })(),
-      (() => {
-        const defaultColor = "#38bdf8";
-        const defaultAccentColor = "#7c3aed";
-        const hoverColor = "#a78bfa";
-        const hoverAccentColor = "#7c3aed";
-        const base = buildPreviewSvg(
-          "icon",
-          defaultColor,
-          defaultAccentColor,
-          undefined,
-          "pixel-arrow",
-        );
-        const hover = buildPreviewSvg(
-          "icon",
-          hoverColor,
-          hoverAccentColor,
-          undefined,
-          "pixel-hand",
-        );
-        return {
-          id: "premium-pixel-neon",
-          name: "3D Pixel Neon",
-          imageUrl: "premium-pixel-neon",
-          hoverImageUrl: "premium-pixel-neon-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
           size: 34,
@@ -792,7 +858,205 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-luxe-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#38bdf8";
+        const defaultAccentColor = "#93c5fd";
+        const hoverColor = "#0ea5e9";
+        const hoverAccentColor = "#bae6fd";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "travel-plane",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "travel-bag",
+        );
+        return {
+          id: "commerce-travel",
+          name: "Travel Vibes",
+          imageUrl: "commerce-travel",
+          hoverImageUrl: "commerce-travel-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#a855f7";
+        const defaultAccentColor = "#c084fc";
+        const hoverColor = "#7c3aed";
+        const hoverAccentColor = "#e879f9";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "music-note",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "music-headphones",
+        );
+        return {
+          id: "commerce-music",
+          name: "Music Store",
+          imageUrl: "commerce-music",
+          hoverImageUrl: "commerce-music-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#f97316";
+        const defaultAccentColor = "#22d3ee";
+        const hoverColor = "#38bdf8";
+        const hoverAccentColor = "#f97316";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "bikini-top",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "flip-flop",
+        );
+        return {
+          id: "commerce-bikini",
+          name: "Bikini Boutique",
+          imageUrl: "commerce-bikini",
+          hoverImageUrl: "commerce-bikini-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#fde047";
+        const defaultAccentColor = "#7dd3fc";
+        const hoverColor = "#22c55e";
+        const hoverAccentColor = "#0ea5e9";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "surfboard",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "wave",
+        );
+        return {
+          id: "commerce-surf",
+          name: "Surf Shop",
+          imageUrl: "commerce-surf",
+          hoverImageUrl: "commerce-surf-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#f59e0b";
+        const defaultAccentColor = "#7c3aed";
+        const hoverColor = "#fcd34d";
+        const hoverAccentColor = "#9333ea";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "jewelry-ring",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "jewelry-gem",
+        );
+        return {
+          id: "commerce-jewelry",
+          name: "Jewelry Glow",
+          imageUrl: "commerce-jewelry",
+          hoverImageUrl: "commerce-jewelry-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#f1f5f9";
+        const defaultAccentColor = "#64748b";
+        const hoverColor = "#22c55e";
+        const hoverAccentColor = "#0f172a";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "home-lamp",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "home-plant",
+        );
+        return {
+          id: "commerce-home",
+          name: "Home Decor",
+          imageUrl: "commerce-home",
+          hoverImageUrl: "commerce-home-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -805,14 +1069,18 @@ const CURSOR_LIBRARY: CursorCategory[] = [
         const hoverColor = "#0ea5e9";
         const hoverAccentColor = "#a78bfa";
         const base = buildPreviewSvg(
-          "cursor",
+          "icon",
           defaultColor,
           defaultAccentColor,
+          undefined,
+          "sunset-sun",
         );
         const hover = buildPreviewSvg(
-          "cursor",
+          "icon",
           hoverColor,
           hoverAccentColor,
+          undefined,
+          "sunset-spark",
         );
         return {
           id: "commerce-tech",
@@ -821,7 +1089,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-tech-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -834,14 +1102,18 @@ const CURSOR_LIBRARY: CursorCategory[] = [
         const hoverColor = "#1e293b";
         const hoverAccentColor = "#cbd5f5";
         const base = buildPreviewSvg(
-          "cursor",
+          "icon",
           defaultColor,
           defaultAccentColor,
+          undefined,
+          "sport-ball",
         );
         const hover = buildPreviewSvg(
-          "cursor",
+          "icon",
           hoverColor,
           hoverAccentColor,
+          undefined,
+          "sport-spark",
         );
         return {
           id: "commerce-min",
@@ -850,7 +1122,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-min-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -1143,7 +1415,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "commerce-organic-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -1157,19 +1429,287 @@ const CURSOR_LIBRARY: CursorCategory[] = [
     name: "Seasonal",
     items: [
       (() => {
+        const defaultColor = "#7dd3fc";
+        const defaultAccentColor = "#bae6fd";
+        const hoverColor = "#60a5fa";
+        const hoverAccentColor = "#dbeafe";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "snowflake",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "snowman",
+        );
+        return {
+          id: "season-winter",
+          name: "Winter Glow",
+          imageUrl: "season-winter",
+          hoverImageUrl: "season-winter-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#fb7185";
+        const defaultAccentColor = "#fda4af";
+        const hoverColor = "#f43f5e";
+        const hoverAccentColor = "#fecdd3";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "valentine-heart",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "valentine-rose",
+        );
+        return {
+          id: "season-valentine",
+          name: "Valentine Bloom",
+          imageUrl: "season-valentine",
+          hoverImageUrl: "season-valentine-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#fbbf24";
+        const defaultAccentColor = "#fde68a";
+        const hoverColor = "#f97316";
+        const hoverAccentColor = "#fed7aa";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "summer-sun",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "summer-sunglasses",
+        );
+        return {
+          id: "season-summer",
+          name: "Summer Splash",
+          imageUrl: "season-summer",
+          hoverImageUrl: "season-summer-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#fb923c";
+        const defaultAccentColor = "#fef08a";
+        const hoverColor = "#f97316";
+        const hoverAccentColor = "#fde68a";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "halloween-pumpkin",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "halloween-ghost",
+        );
+        return {
+          id: "season-halloween",
+          name: "Halloween Haunt",
+          imageUrl: "season-halloween",
+          hoverImageUrl: "season-halloween-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#0f172a";
+        const defaultAccentColor = "#38bdf8";
+        const hoverColor = "#1f2937";
+        const hoverAccentColor = "#22d3ee";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "cyber-chip",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "cyber-circuit",
+        );
+        return {
+          id: "season-cyber",
+          name: "Cyber Friday",
+          imageUrl: "season-cyber",
+          hoverImageUrl: "season-cyber-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#34d399";
+        const defaultAccentColor = "#a7f3d0";
+        const hoverColor = "#10b981";
+        const hoverAccentColor = "#6ee7b7";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "spring-flower",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "spring-tulip",
+        );
+        return {
+          id: "season-spring",
+          name: "Spring Bloom",
+          imageUrl: "season-spring",
+          hoverImageUrl: "season-spring-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#f59e0b";
+        const defaultAccentColor = "#fde68a";
+        const hoverColor = "#d97706";
+        const hoverAccentColor = "#fcd34d";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "autumn-leaf",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "autumn-acorn",
+        );
+        return {
+          id: "season-autumn",
+          name: "Autumn Harvest",
+          imageUrl: "season-autumn",
+          hoverImageUrl: "season-autumn-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#a855f7";
+        const defaultAccentColor = "#f472b6";
+        const hoverColor = "#7c3aed";
+        const hoverAccentColor = "#fb7185";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "newyear-firework",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "newyear-spark",
+        );
+        return {
+          id: "season-newyear",
+          name: "New Year Spark",
+          imageUrl: "season-newyear",
+          hoverImageUrl: "season-newyear-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
         const defaultColor = "#e11d48";
         const defaultAccentColor = "#fbbf24";
         const hoverColor = "#be123c";
         const hoverAccentColor = "#fde68a";
         const base = buildPreviewSvg(
-          "cursor",
+          "icon",
           defaultColor,
           defaultAccentColor,
+          undefined,
+          "holiday-candy",
         );
         const hover = buildPreviewSvg(
-          "cursor",
+          "icon",
           hoverColor,
           hoverAccentColor,
+          undefined,
+          "holiday-spark",
         );
         return {
           id: "season-holiday",
@@ -1178,7 +1718,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "season-holiday-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -1191,14 +1731,18 @@ const CURSOR_LIBRARY: CursorCategory[] = [
         const hoverColor = "#fb7185";
         const hoverAccentColor = "#fde68a";
         const base = buildPreviewSvg(
-          "cursor",
+          "icon",
           defaultColor,
           defaultAccentColor,
+          undefined,
+          "sunset-sun",
         );
         const hover = buildPreviewSvg(
-          "cursor",
+          "icon",
           hoverColor,
           hoverAccentColor,
+          undefined,
+          "sunset-spark",
         );
         return {
           id: "season-sun",
@@ -1207,7 +1751,7 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "season-sun-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -1220,14 +1764,18 @@ const CURSOR_LIBRARY: CursorCategory[] = [
         const hoverColor = "#2563eb";
         const hoverAccentColor = "#bfdbfe";
         const base = buildPreviewSvg(
-          "cursor",
+          "icon",
           defaultColor,
           defaultAccentColor,
+          undefined,
+          "sport-ball",
         );
         const hover = buildPreviewSvg(
-          "cursor",
+          "icon",
           hoverColor,
           hoverAccentColor,
+          undefined,
+          "sport-spark",
         );
         return {
           id: "season-sport",
@@ -1236,7 +1784,40 @@ const CURSOR_LIBRARY: CursorCategory[] = [
           hoverImageUrl: "season-sport-hover",
           previewSvg: base.markup,
           previewHoverSvg: hover.markup,
-          size: 24,
+          size: 32,
+          defaultColor,
+          defaultAccentColor,
+          hoverColor,
+          hoverAccentColor,
+        };
+      })(),
+      (() => {
+        const defaultColor = "#22c55e";
+        const defaultAccentColor = "#86efac";
+        const hoverColor = "#16a34a";
+        const hoverAccentColor = "#bbf7d0";
+        const base = buildPreviewSvg(
+          "icon",
+          defaultColor,
+          defaultAccentColor,
+          undefined,
+          "gaming-pad",
+        );
+        const hover = buildPreviewSvg(
+          "icon",
+          hoverColor,
+          hoverAccentColor,
+          undefined,
+          "gaming-joystick",
+        );
+        return {
+          id: "premium-gaming",
+          name: "Gaming Pulse",
+          imageUrl: "premium-gaming",
+          hoverImageUrl: "premium-gaming-hover",
+          previewSvg: base.markup,
+          previewHoverSvg: hover.markup,
+          size: 32,
           defaultColor,
           defaultAccentColor,
           hoverColor,
@@ -1619,10 +2200,17 @@ export default function Index() {
   };
 
   const handleDeleteSaved = (id: string) => {
-    setSettings((current) => ({
-      ...current,
-      savedCursors: current.savedCursors.filter((cursor) => cursor.id !== id),
-    }));
+    setSettings((current) => {
+      const next = {
+        ...current,
+        savedCursors: current.savedCursors.filter((cursor) => cursor.id !== id),
+      };
+      fetcher.submit(
+        { settings: JSON.stringify(next) },
+        { method: "POST" },
+      );
+      return next;
+    });
   };
 
   const handlePreviewMove = (event: MouseEvent<HTMLDivElement>) => {
@@ -1913,6 +2501,7 @@ export default function Index() {
               </div>
               {previewPresetSvg ? (
                 <span
+                  key={`${settings.preset}-${settings.defaultColor}-${settings.defaultAccentColor}-${settings.hoverColor}-${settings.hoverAccentColor}-${previewHover}`}
                   className={styles.previewSvg}
                   style={previewCursorStyle}
                   dangerouslySetInnerHTML={{

@@ -242,8 +242,16 @@ export const CURSOR_TEMPLATES: Record<string, CursorTemplate> = {
   "cartoon-space": { kind: "icon", icon: "space-helmet", hoverIcon: "space-jet" },
   "cartoon-slime": { kind: "icon", icon: "slime", hoverIcon: "slime-wand" },
   "commerce-luxe": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
-  "commerce-tech": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
-  "commerce-min": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
+  "commerce-tech": {
+    kind: "icon",
+    icon: "sunset-sun",
+    hoverIcon: "sunset-spark",
+  },
+  "commerce-min": {
+    kind: "icon",
+    icon: "sport-ball",
+    hoverIcon: "sport-spark",
+  },
   "commerce-organic": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
   "commerce-barber": {
     kind: "icon",
@@ -407,6 +415,10 @@ export const iconSvg = (
     `<g transform="translate(-4 -4) scale(1.15)">${content}</g>`;
   const commerceScale = (content: string) =>
     `<g transform="translate(-6 -6) scale(1.3)">${content}</g>`;
+  const scaleAroundCenter = (content: string, scale: number) => {
+    const offset = 32 * (1 - scale);
+    return `<g transform="translate(${offset} ${offset}) scale(${scale})">${content}</g>`;
+  };
   const pixelArrow = [
     [6, 6],
     [40, 24],
@@ -602,25 +614,55 @@ export const iconSvg = (
   } else if (type === "sport-spark") {
     shape = `<path d="M32 16l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><path d="M20 20l4 4M44 44l4 4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
   } else if (type === "electric-critter") {
-    shape = `<circle cx="28" cy="30" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="40" cy="30" r="8" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="26" cy="28" r="2" fill="${accent}"/><circle cx="38" cy="28" r="2" fill="${accent}"/><path d="M24 20l-6-6 8 2M44 20l6-6-8 2" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M30 36h8" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+    shape = scaleAroundCenter(
+      `<circle cx="28" cy="30" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="40" cy="30" r="8" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="26" cy="28" r="2" fill="${accent}"/><circle cx="38" cy="28" r="2" fill="${accent}"/><path d="M24 20l-6-6 8 2M44 20l6-6-8 2" stroke="#111827" stroke-width="2" stroke-linecap="round"/><path d="M30 36h8" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`,
+      1.2,
+    );
   } else if (type === "electric-charge") {
-    shape = `<path d="M28 18l-6 10h8l-6 18 16-20h-8l6-8z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="44" cy="22" r="3" fill="${accent}"/><circle cx="20" cy="44" r="3" fill="${accent}"/>`;
+    shape = scaleAroundCenter(
+      `<path d="M28 18l-6 10h8l-6 18 16-20h-8l6-8z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="44" cy="22" r="3" fill="${accent}"/><circle cx="20" cy="44" r="3" fill="${accent}"/>`,
+      1.12,
+    );
   } else if (type === "explorer-hat") {
-    shape = `<path d="M18 30c0-8 6-14 14-14s14 6 14 14H18z" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="14" y="30" width="36" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="2"/>`;
+    shape = scaleAroundCenter(
+      `<circle cx="30" cy="30" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="30" cy="30" r="6" fill="${accent}" opacity="0.35"/><path d="M36 36l10 10" stroke="#111827" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="46" r="2.5" fill="${accent}"/>`,
+      1.08,
+    );
   } else if (type === "explorer-compass") {
-    shape = `<circle cx="32" cy="32" r="12" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M32 22l4 10-10 4 4-10z" fill="${accent}" stroke="#111827" stroke-width="1.6" stroke-linejoin="round"/><circle cx="32" cy="32" r="2.2" fill="#111827"/>`;
+    shape = scaleAroundCenter(
+      `<circle cx="30" cy="30" r="10" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="30" cy="30" r="4.5" fill="${accent}"/><path d="M34 26l6-6" stroke="#111827" stroke-width="2.6" stroke-linecap="round"/><path d="M42 18l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="${accent}"/>`,
+      1.08,
+    );
   } else if (type === "ninja-fox") {
-    shape = `<path d="M16 38l8-18 8 8 8-8 8 18-16 6z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><rect x="22" y="30" width="20" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="1.6"/><circle cx="26" cy="33" r="1.5" fill="#111827"/><circle cx="38" cy="33" r="1.5" fill="#111827"/>`;
+    shape = scaleAroundCenter(
+      `<path d="M16 38l8-18 8 8 8-8 8 18-16 6z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><rect x="22" y="30" width="20" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="1.6"/><circle cx="26" cy="33" r="1.5" fill="#111827"/><circle cx="38" cy="33" r="1.5" fill="#111827"/>`,
+      1.2,
+    );
   } else if (type === "ninja-smoke") {
-    shape = `<circle cx="26" cy="36" r="7" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="38" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="32" cy="26" r="4" fill="${accent}" stroke="#111827" stroke-width="1.6"/>`;
+    shape = scaleAroundCenter(
+      `<circle cx="26" cy="36" r="7" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="38" cy="32" r="6" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="32" cy="26" r="4" fill="${accent}" stroke="#111827" stroke-width="1.6"/>`,
+      1.12,
+    );
   } else if (type === "space-helmet") {
-    shape = `<path d="M20 34c0-10 8-18 12-18s12 8 12 18-8 14-12 14-12-4-12-14z" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="26" y="28" width="12" height="8" rx="4" fill="${accent}" stroke="#111827" stroke-width="1.6"/><path d="M24 40h16" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+    shape = scaleAroundCenter(
+      `<path d="M20 34c0-10 8-18 12-18s12 8 12 18-8 14-12 14-12-4-12-14z" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="26" y="28" width="12" height="8" rx="4" fill="${accent}" stroke="#111827" stroke-width="1.6"/><path d="M24 40h16" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`,
+      1.15,
+    );
   } else if (type === "space-jet") {
-    shape = `<path d="M16 38l18-8 14-2-6 10 6 10-14-2z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="34" cy="34" r="2.2" fill="${accent}"/><path d="M20 42l-6 6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+    shape = scaleAroundCenter(
+      `<path d="M16 38l18-8 14-2-6 10 6 10-14-2z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="34" cy="34" r="2.2" fill="${accent}"/><path d="M20 42l-6 6" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`,
+      1.08,
+    );
   } else if (type === "slime") {
-    shape = `<path d="M18 40c0-10 6-16 14-16s14 6 14 16-6 12-14 12-14-2-14-12z" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="28" cy="34" r="2" fill="${accent}"/><circle cx="36" cy="34" r="2" fill="${accent}"/><path d="M28 40c2 2 6 2 8 0" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
+    shape = scaleAroundCenter(
+      `<path d="M18 40c0-10 6-16 14-16s14 6 14 16-6 12-14 12-14-2-14-12z" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="28" cy="34" r="2" fill="${accent}"/><circle cx="36" cy="34" r="2" fill="${accent}"/><path d="M28 40c2 2 6 2 8 0" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`,
+      1.18,
+    );
   } else if (type === "slime-wand") {
-    shape = `<path d="M22 40l10-10 6 6-10 10z" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M38 22l4 4M42 18l4 4M34 18l4 4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+    shape = scaleAroundCenter(
+      `<path d="M22 40l10-10 6 6-10 10z" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M38 22l4 4M42 18l4 4M34 18l4 4" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`,
+      1.1,
+    );
   } else if (type === "cyber-chip") {
     shape = `<rect x="20" y="20" width="24" height="24" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="26" y="26" width="12" height="12" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><g stroke="${accent}" stroke-width="2" stroke-linecap="round"><line x1="12" y1="24" x2="20" y2="24"/><line x1="12" y1="32" x2="20" y2="32"/><line x1="12" y1="40" x2="20" y2="40"/><line x1="44" y1="24" x2="52" y2="24"/><line x1="44" y1="32" x2="52" y2="32"/><line x1="44" y1="40" x2="52" y2="40"/></g>`;
   } else if (type === "cyber-circuit") {
@@ -642,7 +684,7 @@ export const iconSvg = (
   } else if (type === "travel-bag") {
     shape = `<rect x="18" y="24" width="28" height="20" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M24 24c0-6 4-8 8-8s8 2 8 8" stroke="#111827" stroke-width="2" stroke-linecap="round"/><rect x="24" y="30" width="16" height="6" rx="3" fill="${accent}" stroke="#111827" stroke-width="1.6"/>`;
   } else if (type === "music-note") {
-    shape = `<path d="M24 18v20c0 4-6 6-8 2-1-3 2-6 6-5V22l18-4v16c0 4-6 6-8 2-1-3 2-6 6-5V20z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/>`;
+    shape = `<path d="M24 18v20c0 4-6 6-8 2-1-3 2-6 6-5V22l18-4v16c0 4-6 6-8 2-1-3 2-6 6-5V20z" fill="${fill}" stroke="#111827" stroke-width="2" stroke-linejoin="round"/><circle cx="40" cy="18" r="3" fill="${accent}"/>`;
   } else if (type === "music-headphones") {
     shape = `<path d="M18 32c0-8 6-14 14-14s14 6 14 14" stroke="#111827" stroke-width="2" fill="none"/><rect x="14" y="32" width="8" height="12" rx="3" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="42" y="32" width="8" height="12" rx="3" fill="${fill}" stroke="#111827" stroke-width="2"/><path d="M22 38h20" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
   } else if (type === "gaming-pad") {

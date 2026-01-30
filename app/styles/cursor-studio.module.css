@@ -62,7 +62,7 @@
 
 .pageHeader h2 {
   margin: 0;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.6rem;
   font-size: clamp(1.6rem, 1.2rem + 1vw, 2.1rem);
   font-weight: 700;
 }

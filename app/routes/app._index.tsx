@@ -2005,6 +2005,19 @@ const normalizeSettings = (
   settings?: Partial<CursorSettings> | null,
 ): CursorSettings => {
   const merged = { ...DEFAULT_SETTINGS, ...(settings || {}) };
+  const normalizeBoolean = (value: unknown, fallback: boolean) => {
+    if (typeof value === "boolean") return value;
+    if (typeof value === "string") {
+      const normalized = value.trim().toLowerCase();
+      if (["false", "0", "no", "off"].includes(normalized)) return false;
+      if (["true", "1", "yes", "on"].includes(normalized)) return true;
+    }
+    if (typeof value === "number") {
+      if (value === 0) return false;
+      if (value === 1) return true;
+    }
+    return fallback;
+  };
   const normalizeHexColor = (value: unknown, fallback: string) => {
     if (typeof value !== "string") return fallback;
     const trimmed = value.trim();
@@ -2028,7 +2041,7 @@ const normalizeSettings = (
 
   return {
     ...merged,
-    enabled: Boolean(merged.enabled),
+    enabled: normalizeBoolean(merged.enabled, DEFAULT_SETTINGS.enabled),
     size: Number(merged.size),
     hoverSize: Number(merged.hoverSize ?? merged.size),
     defaultColor: normalizeHexColor(
@@ -2376,6 +2389,17 @@ export default function Index() {
       { settings: JSON.stringify(settings) },
       { method: "POST" },
     );
+  };
+
+  const handleToggleEnabled = (nextEnabled: boolean) => {
+    setSettings((current) => {
+      const next = { ...current, enabled: nextEnabled };
+      fetcher.submit(
+        { settings: JSON.stringify(next) },
+        { method: "POST" },
+      );
+      return next;
+    });
   };
 
   const applyCursorItem = (item: CursorItem) => {
@@ -2738,7 +2762,9 @@ export default function Index() {
               </span>
             </div>
             <div
-              className={styles.previewCanvas}
+              className={`${styles.previewCanvas} ${
+                settings.enabled ? "" : styles.previewCanvasDisabled
+              }`}
               style={previewStyle}
               onMouseMove={handlePreviewMove}
               onMouseLeave={() => setPreviewHover(false)}
@@ -2746,37 +2772,43 @@ export default function Index() {
               <div className={styles.previewStage} ref={previewStageRef}>
                 <button type="button">Button</button>
               </div>
-              {previewPresetSvg ? (
-                <span
-                  key={`${settings.preset}-${settings.defaultColor}-${settings.defaultAccentColor}-${settings.hoverColor}-${settings.hoverAccentColor}-${previewHover}`}
-                  className={styles.previewSvg}
-                  style={previewCursorStyle}
-                  dangerouslySetInnerHTML={{
-                    __html: previewPresetSvg,
-                  }}
-                />
-              ) : settings.imageUrl ? (
-                <img
-                  className={styles.previewImage}
-                  style={previewCursorStyle}
-                  src={
-                    previewHover && settings.hoverImageUrl
-                      ? settings.hoverImageUrl
-                      : settings.imageUrl
-                  }
-                  alt="Cursor preview"
-                />
+              {settings.enabled ? (
+                previewPresetSvg ? (
+                  <span
+                    key={`${settings.preset}-${settings.defaultColor}-${settings.defaultAccentColor}-${settings.hoverColor}-${settings.hoverAccentColor}-${previewHover}`}
+                    className={styles.previewSvg}
+                    style={previewCursorStyle}
+                    dangerouslySetInnerHTML={{
+                      __html: previewPresetSvg,
+                    }}
+                  />
+                ) : settings.imageUrl ? (
+                  <img
+                    className={styles.previewImage}
+                    style={previewCursorStyle}
+                    src={
+                      previewHover && settings.hoverImageUrl
+                        ? settings.hoverImageUrl
+                        : settings.imageUrl
+                    }
+                    alt="Cursor preview"
+                  />
+                ) : (
+                  <>
+                    <div
+                      className={styles.previewCursor}
+                      style={previewCursorStyle}
+                    />
+                    <div
+                      className={styles.previewRing}
+                      style={previewCursorStyle}
+                    />
+                  </>
+                )
               ) : (
-                <>
-                  <div
-                    className={styles.previewCursor}
-                    style={previewCursorStyle}
-                  />
-                  <div
-                    className={styles.previewRing}
-                    style={previewCursorStyle}
-                  />
-                </>
+                <div className={styles.previewDisabled}>
+                  Custom cursor disabled
+                </div>
               )}
             </div>
           </div>
@@ -2797,7 +2829,7 @@ export default function Index() {
                     type="checkbox"
                     checked={settings.enabled}
                     onChange={(event) =>
-                      updateSetting("enabled", event.target.checked)
+                      handleToggleEnabled(event.target.checked)
                     }
                   />
                   <span className={styles.toggleSlider} />

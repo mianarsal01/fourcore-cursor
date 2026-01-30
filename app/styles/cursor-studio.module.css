@@ -62,13 +62,14 @@
 
 .pageHeader h2 {
   margin: 0;
+  margin-bottom: 0.35rem;
   font-size: clamp(1.6rem, 1.2rem + 1vw, 2.1rem);
   font-weight: 700;
 }
 
 .headerTitle {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.2rem;
   max-width: 480px;
 }
 
@@ -162,8 +163,26 @@
 
 .categoryRow {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+
+.categoryRow::-webkit-scrollbar {
+  height: 0;
+}
+
+.categoryRow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.categoryRow::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
 }
 
 .categoryButton {
@@ -247,6 +266,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  pointer-events: none;
 }
 
 .showMoreWrap {
@@ -738,15 +758,6 @@
   font-weight: 600;
   cursor: pointer;
   color: #0f172a;
-}
-
-.storeBadge {
-  background: #f1f5f9;
-  color: #475569;
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 600;
 }
 
 .primaryButton {

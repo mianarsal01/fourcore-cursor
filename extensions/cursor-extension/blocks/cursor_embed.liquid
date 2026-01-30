@@ -3,7 +3,7 @@
 {% assign size_value = app.metafields.fourcore_cursor.cursor_size.value | default: 32 | plus: 0 %}
 {% assign hover_size_value = app.metafields.fourcore_cursor.hover_cursor_size.value | default: size_value | plus: 0 %}
 {% assign enabled_value = app.metafields.fourcore_cursor.enabled.value | default: true %}
-{% assign disable_mobile_value = app.metafields.fourcore_cursor.disable_on_mobile.value | default: true %}
+{% assign disable_mobile_value = true %}
 {% assign default_color = app.metafields.fourcore_cursor.default_color.value | default: "#ff7a59" %}
 {% assign default_accent = app.metafields.fourcore_cursor.default_accent_color.value | default: "#ffd166" %}
 {% assign hover_color = app.metafields.fourcore_cursor.hover_color.value | default: "#ff4d4d" %}

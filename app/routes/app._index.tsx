@@ -37,7 +37,6 @@ type CursorSettings = {
   hoverAccentColor: string;
   imageUrl: string;
   hoverImageUrl: string;
-  disableOnMobile: boolean;
   savedCursors: SavedCursor[];
 };
 
@@ -52,7 +51,6 @@ const DEFAULT_SETTINGS: CursorSettings = {
   hoverAccentColor: "#ffe29a",
   imageUrl: "cartoon-bag",
   hoverImageUrl: "cartoon-bag-hover",
-  disableOnMobile: true,
   savedCursors: [],
 };
 
@@ -835,8 +833,8 @@ const CURSOR_LIBRARY: CursorCategory[] = [
       (() => {
         const defaultColor = "#ffffff";
         const defaultAccentColor = "#111111";
-        const hoverColor = "#ffffff";
-        const hoverAccentColor = "#111111";
+        const hoverColor = "#111111";
+        const hoverAccentColor = "#000000";
         const base = buildPreviewSvg(
           "icon",
           defaultColor,
@@ -868,8 +866,8 @@ const CURSOR_LIBRARY: CursorCategory[] = [
       (() => {
         const defaultColor = "#ffffff";
         const defaultAccentColor = "#111111";
-        const hoverColor = "#ffffff";
-        const hoverAccentColor = "#111111";
+        const hoverColor = "#111111";
+        const hoverAccentColor = "#000000";
         const base = buildPreviewSvg(
           "icon",
           defaultColor,
@@ -901,8 +899,8 @@ const CURSOR_LIBRARY: CursorCategory[] = [
       (() => {
         const defaultColor = "#111111";
         const defaultAccentColor = "#ffffff";
-        const hoverColor = "#ffffff";
-        const hoverAccentColor = "#111111";
+        const hoverColor = "#111111";
+        const hoverAccentColor = "#000000";
         const base = buildPreviewSvg(
           "icon",
           defaultColor,
@@ -934,8 +932,8 @@ const CURSOR_LIBRARY: CursorCategory[] = [
       (() => {
         const defaultColor = "#ffffff";
         const defaultAccentColor = "#111111";
-        const hoverColor = "#ffffff";
-        const hoverAccentColor = "#111111";
+        const hoverColor = "#111111";
+        const hoverAccentColor = "#000000";
         const base = buildPreviewSvg(
           "icon",
           defaultColor,
@@ -967,8 +965,8 @@ const CURSOR_LIBRARY: CursorCategory[] = [
       (() => {
         const defaultColor = "#ffffff";
         const defaultAccentColor = "#111111";
-        const hoverColor = "#ffffff";
-        const hoverAccentColor = "#111111";
+        const hoverColor = "#111111";
+        const hoverAccentColor = "#000000";
         const base = buildPreviewSvg(
           "icon",
           defaultColor,
@@ -2031,7 +2029,6 @@ const normalizeSettings = (
   return {
     ...merged,
     enabled: Boolean(merged.enabled),
-    disableOnMobile: Boolean(merged.disableOnMobile),
     size: Number(merged.size),
     hoverSize: Number(merged.hoverSize ?? merged.size),
     defaultColor: normalizeHexColor(
@@ -2071,10 +2068,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const storedSettings =
     (record?.settings as Partial<CursorSettings> | null) ?? null;
 
-  return {
-    shop: { domain: session.shop },
-    settings: normalizeSettings(storedSettings),
-  };
+  return { settings: normalizeSettings(storedSettings) };
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -2151,7 +2145,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
                 namespace: "fourcore_cursor",
                 key: "disable_on_mobile",
                 type: "boolean",
-                value: String(Boolean(normalized.disableOnMobile)),
+                value: "true",
               },
               {
                 ownerId: installationId,
@@ -2207,7 +2201,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (userErrors.length) {
         return {
           ok: false,
-          error: userErrors.map((err) => err.message).join(", "),
+          error: userErrors
+            .map((err: { message?: string }) => err.message || "")
+            .filter(Boolean)
+            .join(", "),
         };
       }
     }
@@ -2222,8 +2219,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function Index() {
   const shopify = useAppBridge();
   const fetcher = useFetcher<typeof action>();
-  const { settings: initialSettings, shop } =
-    useLoaderData<typeof loader>();
+  const { settings: initialSettings } = useLoaderData<typeof loader>();
   const [settings, setSettings] =
     useState<CursorSettings>(initialSettings);
   const [activeTab, setActiveTab] =
@@ -2236,6 +2232,12 @@ export default function Index() {
   const [expandedCategories, setExpandedCategories] = useState<
     Record<string, boolean>
   >({});
+  const previewFrame = useRef<number | null>(null);
+  const latestPreview = useRef({
+    x: 120,
+    y: 120,
+    hover: false,
+  });
   const previewStageRef = useRef<HTMLDivElement | null>(null);
 
   const previewStyle = useMemo(
@@ -2262,6 +2264,26 @@ export default function Index() {
   const isCustomCursor =
     settings.preset === "custom" && settings.imageUrl.startsWith("http");
   const isBuiltInPreset = Boolean(CURSOR_TEMPLATES[settings.preset]);
+  const getCardSvg = (item: CursorItem, hover: boolean) => {
+    if (settings.preset !== item.id) {
+      return hover ? item.previewHoverSvg : item.previewSvg;
+    }
+    const template = CURSOR_TEMPLATES[item.id];
+    if (!template) return hover ? item.previewHoverSvg : item.previewSvg;
+    if (template.kind === "icon") {
+      const icon = hover && template.hoverIcon ? template.hoverIcon : template.icon;
+      return iconSvg(
+        icon,
+        hover ? settings.hoverColor : settings.defaultColor,
+        hover ? settings.hoverAccentColor : settings.defaultAccentColor,
+      );
+    }
+    return cursorSvg(
+      hover ? settings.hoverColor : settings.defaultColor,
+      hover ? settings.hoverAccentColor : settings.defaultAccentColor,
+      hover ? template.hoverAccent : template.accent,
+    );
+  };
   const previewPresetSvg = useMemo(() => {
     if (!isBuiltInPreset) return null;
     return buildCursorSvg(
@@ -2302,8 +2324,24 @@ export default function Index() {
   const isExpanded = shouldCollapse
     ? Boolean(expandedCategories[activeCategory])
     : true;
-  const displayedItems =
-    shouldCollapse && !isExpanded ? galleryItems.slice(0, 12) : galleryItems;
+  const displayedItems = useMemo(() => {
+    if (!shouldCollapse || isExpanded) return galleryItems;
+    const slice = galleryItems.slice(0, 12);
+    if (activeCategory !== "all") return slice;
+    if (slice.some((item) => item.id === settings.preset)) return slice;
+    const selected = galleryItems.find((item) => item.id === settings.preset);
+    if (!selected) return slice;
+    const next = [...slice];
+    next.pop();
+    next.unshift(selected);
+    return next;
+  }, [
+    activeCategory,
+    galleryItems,
+    isExpanded,
+    settings.preset,
+    shouldCollapse,
+  ]);
 
   const isSaving =
     ["loading", "submitting"].includes(fetcher.state) &&
@@ -2317,6 +2355,14 @@ export default function Index() {
       shopify.toast.show(fetcher.data.error);
     }
   }, [fetcher.data, shopify]);
+
+  useEffect(() => {
+    return () => {
+      if (previewFrame.current) {
+        window.cancelAnimationFrame(previewFrame.current);
+      }
+    };
+  }, []);
 
   const updateSetting = <K extends keyof CursorSettings>(
     key: K,
@@ -2400,11 +2446,17 @@ export default function Index() {
         event.clientY >= targetRect.top &&
         event.clientY <= targetRect.bottom
       : false;
-    setPreviewPos({
+    latestPreview.current = {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top,
+      hover: isHoverTarget,
+    };
+    if (previewFrame.current) return;
+    previewFrame.current = window.requestAnimationFrame(() => {
+      previewFrame.current = null;
+      setPreviewPos({ x: latestPreview.current.x, y: latestPreview.current.y });
+      setPreviewHover(latestPreview.current.hover);
     });
-    setPreviewHover(isHoverTarget);
   };
 
   return (
@@ -2418,7 +2470,6 @@ export default function Index() {
             </p>
           </div>
           <div className={styles.headerActions}>
-            <span className={styles.storeBadge}>Store: {shop?.domain}</span>
             <button
               className={styles.resetButton}
               type="button"
@@ -2536,12 +2587,14 @@ export default function Index() {
                       <div className={styles.cursorIcons}>
                         <span
                           className={styles.cursorSvg}
-                          dangerouslySetInnerHTML={{ __html: item.previewSvg }}
+                          dangerouslySetInnerHTML={{
+                            __html: getCardSvg(item, false),
+                          }}
                         />
                         <span
                           className={styles.cursorSvg}
                           dangerouslySetInnerHTML={{
-                            __html: item.previewHoverSvg,
+                            __html: getCardSvg(item, true),
                           }}
                         />
                       </div>
@@ -2750,19 +2803,6 @@ export default function Index() {
                   <span className={styles.toggleSlider} />
                   <span className={styles.toggleLabelText}>
                     Enable custom cursor
-                  </span>
-                </label>
-                <label className={styles.toggleSwitch}>
-                  <input
-                    type="checkbox"
-                    checked={settings.disableOnMobile}
-                    onChange={(event) =>
-                      updateSetting("disableOnMobile", event.target.checked)
-                    }
-                  />
-                  <span className={styles.toggleSlider} />
-                  <span className={styles.toggleLabelText}>
-                    Disable on mobile
                   </span>
                 </label>
               </div>

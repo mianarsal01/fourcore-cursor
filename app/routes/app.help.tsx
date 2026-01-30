@@ -111,8 +111,8 @@ export default function HelpPage() {
                   checked in the app&apos;s settings.
                 </li>
                 <li>
-                  If you are on a mobile device, make sure &quot;Disable on
-                  mobile&quot; is not checked (or test on a desktop device).
+                  Custom cursors are disabled on mobile by design. Please test
+                  on a desktop device.
                 </li>
                 <li>
                   Clear your browser cache, or try viewing your store in an

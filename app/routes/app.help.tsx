@@ -43,7 +43,7 @@ export default function HelpPage() {
                     section.
                   </li>
                   <li>
-                    Find &quot;FourCore Cursor&quot; in the list of app embeds
+                    Find &quot;FourCore Custom Cursor&quot; in the list of app embeds
                     and make sure the toggle is switched on.
                   </li>
                   <li>Click &quot;Save&quot; in the top right corner.</li>
@@ -75,7 +75,7 @@ export default function HelpPage() {
                 </li>
                 <li>Once uploaded, copy the URL of each image.</li>
                 <li>
-                  In the FourCore Cursor app, go to the &quot;Upload your
+                  In the FourCore Custom Cursor app, go to the &quot;Upload your
                   own&quot; tab.
                 </li>
                 <li>
@@ -102,7 +102,7 @@ export default function HelpPage() {
               </p>
               <ul>
                 <li>
-                  Make sure you have enabled the &quot;FourCore Cursor&quot; app
+                  Make sure you have enabled the &quot;FourCore Custom Cursor&quot; app
                   embed in your theme editor, as described in the &quot;Getting
                   Started&quot; section.
                 </li>
@@ -142,16 +142,26 @@ export default function HelpPage() {
           max-width: none;
           margin: 0;
           background: radial-gradient(
-              circle at 12% 5%,
-              rgba(94, 234, 212, 0.15),
-              transparent 35%
+              circle at 10% 8%,
+              rgba(236, 72, 153, 0.2),
+              transparent 38%
             ),
             radial-gradient(
-              circle at 90% 10%,
-              rgba(129, 140, 248, 0.18),
-              transparent 42%
+              circle at 85% 12%,
+              rgba(59, 130, 246, 0.22),
+              transparent 40%
             ),
-            linear-gradient(135deg, #f8fafc 0%, #eef2ff 45%, #ffffff 100%);
+            radial-gradient(
+              circle at 30% 80%,
+              rgba(34, 211, 238, 0.2),
+              transparent 45%
+            ),
+            radial-gradient(
+              circle at 90% 78%,
+              rgba(250, 204, 21, 0.18),
+              transparent 48%
+            ),
+            linear-gradient(135deg, #fdf2f8 0%, #eef2ff 45%, #f0f9ff 100%);
           border-radius: 1.6rem;
           padding: 1.5rem 1.6rem 2rem;
           box-sizing: border-box;
@@ -162,11 +172,11 @@ export default function HelpPage() {
           box-sizing: border-box;
         }
         .fc-help-card {
-          border: 1px solid #e2e8f0;
+          border: 1px solid rgba(148, 163, 184, 0.35);
           border-radius: 1.35rem;
-          background: #ffffff;
+          background: rgba(255, 255, 255, 0.92);
           padding: 1.25rem 1.35rem;
-          box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
+          box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
         }
         .fc-help-header {
           display: grid;
@@ -174,7 +184,7 @@ export default function HelpPage() {
         }
         .fc-help-header h2 {
           margin: 0;
-          font-size: 1.3rem;
+          font-size: 1.15rem;
         }
         .fc-help-header p {
           margin: 0;
@@ -185,19 +195,41 @@ export default function HelpPage() {
           gap: 1.5rem;
         }
         .fc-help h3 {
-          font-size: 1.1rem;
+          font-size: 1rem;
           font-weight: 600;
           margin: 0;
         }
         .fc-help details {
-          border: 1px solid #e2e8f0;
+          border: 1px solid rgba(148, 163, 184, 0.35);
           border-radius: 0.95rem;
-          padding: 0.9rem 1rem;
-          background: #f8fafc;
+          padding: 0.6rem 0.8rem 0.9rem;
+          background: rgba(255, 255, 255, 0.9);
+          box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7);
         }
         .fc-help summary {
           font-weight: 600;
           cursor: pointer;
+          list-style: none;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          color: #0f172a;
+          padding: 0.4rem 0.2rem;
+        }
+        .fc-help summary::-webkit-details-marker {
+          display: none;
+        }
+        .fc-help summary::before {
+          content: "▸";
+          font-size: 0.9rem;
+          color: #2563eb;
+          transition: transform 0.2s ease;
+        }
+        .fc-help details[open] summary::before {
+          transform: rotate(90deg);
+        }
+        .fc-help details[open] summary {
+          color: #2563eb;
         }
         .fc-help p, .fc-help ul, .fc-help ol {
           margin: 0.8rem 0 0;
@@ -209,7 +241,7 @@ export default function HelpPage() {
           gap: 1rem;
         }
         .fc-primary-button {
-          background-color: #1d4ed8;
+          background-color: #2563eb;
           color: white;
           text-decoration: none;
           border: none;
@@ -218,10 +250,10 @@ export default function HelpPage() {
           font-weight: 600;
           cursor: pointer;
           justify-self: start;
-          box-shadow: 0 10px 20px rgba(29, 78, 216, 0.25);
+          box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
         }
         .fc-primary-button:hover {
-          background-color: #1e40af;
+          background-color: #1d4ed8;
         }
         @media (max-width: 760px) {
           .fc-help-shell {

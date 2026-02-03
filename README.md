@@ -1,4 +1,4 @@
-# FourCore Cursor
+# FourCore Custom Cursor
 
 Shopify app for adding custom cursors to storefronts using a lightweight theme app embed.
 

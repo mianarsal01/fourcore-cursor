@@ -2,7 +2,7 @@
 
 Last updated: 2025-01-20
 
-FourCore Cursor ("the App") helps merchants add custom cursors to their storefronts. This policy describes how we handle data when you use the App.
+FourCore Custom Cursor ("the App") helps merchants add custom cursors to their storefronts. This policy describes how we handle data when you use the App.
 
 ## Data we access
 

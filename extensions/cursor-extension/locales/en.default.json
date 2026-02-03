@@ -1,6 +1,6 @@
 {
   "cursor": {
-    "name": "FourCore Cursor",
+    "name": "FourCore Custom Cursor",
     "enable": "Enable custom cursor",
     "excludeSelector": "Exclude selector (optional)"
   }

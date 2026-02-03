@@ -2,7 +2,7 @@
 
 Last updated: 2025-01-20
 
-By installing or using FourCore Cursor ("the App"), you agree to these terms.
+By installing or using FourCore Custom Cursor ("the App"), you agree to these terms.
 
 ## Use of the App
 
@@ -18,7 +18,7 @@ If the App is offered with paid plans, fees and billing terms will be described 
 
 ## Limitation of liability
 
-To the maximum extent permitted by law, FourCore Cursor is provided "as is" and we are not liable for indirect or consequential damages arising from use of the App.
+To the maximum extent permitted by law, FourCore Custom Cursor is provided "as is" and we are not liable for indirect or consequential damages arising from use of the App.
 
 ## Contact
 

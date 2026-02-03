@@ -111,7 +111,37 @@ export type IconType =
   | "crewmate-medbay"
   | "crewmate-medbay-monitor"
   | "crewmate-engineer"
-  | "crewmate-engineer-gear";
+  | "crewmate-engineer-gear"
+  | "modern-line-pointer"
+  | "modern-line-pointer-hover"
+  | "modern-glass-pointer"
+  | "modern-glass-pointer-hover"
+  | "modern-neo-pointer"
+  | "modern-neo-pointer-hover"
+  | "modern-paper-pointer"
+  | "modern-paper-pointer-hover"
+  | "modern-clay-pointer"
+  | "modern-clay-pointer-hover"
+  | "modern-luxe-pointer"
+  | "modern-luxe-pointer-hover"
+  | "modern-chroma-pointer"
+  | "modern-chroma-pointer-hover"
+  | "modern-studio-pointer"
+  | "modern-studio-pointer-hover"
+  | "modern-ui-pointer"
+  | "modern-ui-pointer-hover"
+  | "modern-travel-pointer"
+  | "modern-travel-pointer-hover"
+  | "neon-arrow"
+  | "neon-ring"
+  | "neon-arrow-3d"
+  | "neon-ring-dots"
+  | "neon-hand"
+  | "neon-fist"
+  | "emoji-smile"
+  | "emoji-laugh"
+  | "emoji-wink"
+  | "emoji-heart-eyes";
 
 export type CursorTemplate =
   | {
@@ -241,6 +271,96 @@ export const CURSOR_TEMPLATES: Record<string, CursorTemplate> = {
   "cartoon-ninja": { kind: "icon", icon: "ninja-fox", hoverIcon: "ninja-smoke" },
   "cartoon-space": { kind: "icon", icon: "space-helmet", hoverIcon: "space-jet" },
   "cartoon-slime": { kind: "icon", icon: "slime", hoverIcon: "slime-wand" },
+  "cartoon-emoji-smile": {
+    kind: "icon",
+    icon: "emoji-smile",
+    hoverIcon: "emoji-laugh",
+  },
+  "cartoon-emoji-wink": {
+    kind: "icon",
+    icon: "emoji-wink",
+    hoverIcon: "emoji-laugh",
+  },
+  "cartoon-emoji-love": {
+    kind: "icon",
+    icon: "emoji-heart-eyes",
+    hoverIcon: "emoji-laugh",
+  },
+  "modern-clean-line": {
+    kind: "icon",
+    icon: "modern-line-pointer",
+    hoverIcon: "modern-line-pointer-hover",
+  },
+  "modern-glass": {
+    kind: "icon",
+    icon: "modern-glass-pointer",
+    hoverIcon: "modern-glass-pointer-hover",
+  },
+  "modern-neo": {
+    kind: "icon",
+    icon: "modern-neo-pointer",
+    hoverIcon: "modern-neo-pointer-hover",
+  },
+  "modern-paper": {
+    kind: "icon",
+    icon: "modern-paper-pointer",
+    hoverIcon: "modern-paper-pointer-hover",
+  },
+  "modern-clay": {
+    kind: "icon",
+    icon: "modern-clay-pointer",
+    hoverIcon: "modern-clay-pointer-hover",
+  },
+  "modern-luxe": {
+    kind: "icon",
+    icon: "modern-luxe-pointer",
+    hoverIcon: "modern-luxe-pointer-hover",
+  },
+  "modern-chroma": {
+    kind: "icon",
+    icon: "modern-chroma-pointer",
+    hoverIcon: "modern-chroma-pointer-hover",
+  },
+  "modern-studio": {
+    kind: "icon",
+    icon: "modern-studio-pointer",
+    hoverIcon: "modern-studio-pointer-hover",
+  },
+  "modern-ui": {
+    kind: "icon",
+    icon: "modern-ui-pointer",
+    hoverIcon: "modern-ui-pointer-hover",
+  },
+  "modern-travel": {
+    kind: "icon",
+    icon: "modern-travel-pointer",
+    hoverIcon: "modern-travel-pointer-hover",
+  },
+  "neon-glow": {
+    kind: "icon",
+    icon: "neon-arrow",
+    hoverIcon: "neon-ring",
+  },
+  "neon-arc": {
+    kind: "icon",
+    icon: "neon-arrow-3d",
+    hoverIcon: "neon-ring",
+  },
+  "neon-orbit": {
+    kind: "icon",
+    icon: "neon-arrow",
+    hoverIcon: "neon-ring-dots",
+  },
+  "neon-click": {
+    kind: "icon",
+    icon: "neon-arrow",
+    hoverIcon: "neon-hand",
+  },
+  "neon-punch": {
+    kind: "icon",
+    icon: "neon-arrow-3d",
+    hoverIcon: "neon-fist",
+  },
   "commerce-luxe": { kind: "cursor", accent: "dot", hoverAccent: "dot" },
   "commerce-tech": {
     kind: "icon",
@@ -691,6 +811,145 @@ export const iconSvg = (
     shape = `<rect x="18" y="26" width="28" height="16" rx="8" fill="${fill}" stroke="#111827" stroke-width="2"/><circle cx="26" cy="34" r="3" fill="${accent}"/><circle cx="38" cy="34" r="3" fill="${accent}"/><path d="M30 30h4M32 28v4" stroke="#111827" stroke-width="2" stroke-linecap="round"/>`;
   } else if (type === "gaming-joystick") {
     shape = `<rect x="24" y="34" width="16" height="10" rx="4" fill="${fill}" stroke="#111827" stroke-width="2"/><rect x="30" y="22" width="4" height="12" rx="2" fill="${accent}" stroke="#111827" stroke-width="1.6"/><circle cx="32" cy="20" r="5" fill="${fill}" stroke="#111827" stroke-width="2"/>`;
+  } else if (type === "modern-line-pointer") {
+    shape = `<path d="M14 8l32 25-17 3 7 18-9 4-7-18-14 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><circle cx="44" cy="44" r="6" fill="none" stroke="${accent}" stroke-width="2"/><circle cx="44" cy="44" r="2.5" fill="${accent}"/>`;
+  } else if (type === "modern-line-pointer-hover") {
+    shape = `<path d="M14 8l32 25-17 3 7 18-9 4-7-18-14 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><circle cx="44" cy="44" r="7.5" fill="none" stroke="${accent}" stroke-width="2.4"/><circle cx="44" cy="44" r="3" fill="${accent}"/><path d="M44 32l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" fill="${accent}" opacity="0.45"/>`;
+  } else if (type === "modern-glass-pointer") {
+    shape = `<path d="M12 8l34 26-18 3 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.2" stroke-linejoin="round"/><path d="M16 12l12 10" stroke="${accent}" stroke-width="2" stroke-linecap="round" opacity="0.5"/><path d="M14 10l34 26" stroke="${accent}" stroke-width="1.4" opacity="0.3"/><circle cx="42" cy="42" r="6" fill="none" stroke="${accent}" stroke-width="1.8"/><path d="M39 40c2-2 5-2 7 0" stroke="${accent}" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>`;
+  } else if (type === "modern-glass-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 3 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 12l12 10" stroke="${accent}" stroke-width="2.2" stroke-linecap="round" opacity="0.6"/><circle cx="42" cy="42" r="7.5" fill="none" stroke="${accent}" stroke-width="2.2"/><circle cx="42" cy="42" r="3" fill="${accent}" opacity="0.5"/>`;
+  } else if (type === "modern-neo-pointer") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><path d="M40 30l6-6 6 6-6 6z" fill="none" stroke="${accent}" stroke-width="2"/><path d="M22 16l6 2-2 6" stroke="${accent}" stroke-width="2.2" stroke-linecap="round"/>`;
+  } else if (type === "modern-neo-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><path d="M40 30l6-6 6 6-6 6z" fill="none" stroke="${accent}" stroke-width="2.2"/><path d="M26 14l6 2-2 6" stroke="${accent}" stroke-width="2.4" stroke-linecap="round"/><path d="M44 18l2.8 6 6 2.8-6 2.8-2.8 6-2.8-6-6-2.8 6-2.8z" fill="none" stroke="${accent}" stroke-width="1.8"/>`;
+  } else if (type === "modern-paper-pointer") {
+    const shadow = mixHex(accent, "#94a3b8", 0.35);
+    shape = `
+      <path d="M18 12l30 24-16 3 8 20-10 4-8-20-14 10z" fill="${shadow}" opacity="0.55"/>
+      <path d="M16 8l30 24-16 3 7 18-9 4-7-18-14 10z" fill="${fill}"/>
+      <path d="M20 12l22 18-12 2-6-5-10 7z" fill="#ffffff" opacity="0.7"/>
+      <path d="M26 18l10 8" stroke="${accent}" stroke-width="1.6" stroke-linecap="round" opacity="0.8"/>
+    `;
+  } else if (type === "modern-paper-pointer-hover") {
+    const shadow = mixHex(accent, "#6b7280", 0.45);
+    shape = `
+      <path d="M18 12l30 24-16 3 8 20-10 4-8-20-14 10z" fill="${shadow}" opacity="0.6"/>
+      <path d="M16 8l30 24-16 3 7 18-9 4-7-18-14 10z" fill="${fill}"/>
+      <path d="M20 12l22 18-12 2-6-5-10 7z" fill="#ffffff" opacity="0.75"/>
+      <circle cx="44" cy="42" r="5.5" fill="${accent}" opacity="0.7"/>
+      <circle cx="44" cy="42" r="3" fill="#ffffff" opacity="0.85"/>
+    `;
+  } else if (type === "modern-clay-pointer") {
+    shape = `<path d="M12 8l34 26-16 3 7 18-8 4-7-18-16 10z" fill="${fill}" stroke="#111827" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 12l12 10" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.4"/><circle cx="42" cy="44" r="6.5" fill="${accent}" stroke="#111827" stroke-width="1.2"/><circle cx="39" cy="41" r="2.2" fill="#ffffff" opacity="0.6"/>`;
+  } else if (type === "modern-clay-pointer-hover") {
+    shape = `<path d="M12 8l34 26-16 3 7 18-8 4-7-18-16 10z" fill="${fill}" stroke="#111827" stroke-width="1.8" stroke-linejoin="round"/><circle cx="42" cy="44" r="7.5" fill="${accent}" stroke="#111827" stroke-width="1.2"/><path d="M38 40c2-2 5-2 7 0" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/><path d="M44 32l2.4 4.8 4.8 2.4-4.8 2.4-2.4 4.8-2.4-4.8-4.8-2.4 4.8-2.4z" fill="#ffffff" opacity="0.35"/>`;
+  } else if (type === "modern-luxe-pointer") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><path d="M40 40l5 7-5 10-5-10z" fill="none" stroke="${accent}" stroke-width="2" stroke-linejoin="round"/><path d="M40 40l-2 7h4z" fill="${accent}" opacity="0.5"/>`;
+  } else if (type === "modern-luxe-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><path d="M40 39l5 8-5 10-5-10z" fill="none" stroke="${accent}" stroke-width="2.2" stroke-linejoin="round"/><path d="M40 39l-2 8h4z" fill="${accent}" opacity="0.6"/><path d="M50 36l1.6 3.2 3.2 1.6-3.2 1.6-1.6 3.2-1.6-3.2-3.2-1.6 3.2-1.6z" fill="none" stroke="${accent}" stroke-width="1.6"/>`;
+  } else if (type === "modern-chroma-pointer") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><path d="M20 14l16 12-6 2-6-4-8 6" fill="none" stroke="${accent}" stroke-width="1.6" stroke-linejoin="round"/><path d="M34 40c3-4 7-4 10 0" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "modern-chroma-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><path d="M20 14l16 12-6 2-6-4-8 6" fill="none" stroke="${accent}" stroke-width="1.8" stroke-linejoin="round"/><path d="M33 40c4-5 9-5 13 0" stroke="${accent}" stroke-width="2.2" stroke-linecap="round"/><circle cx="49" cy="42" r="2.4" fill="${accent}"/>`;
+  } else if (type === "modern-studio-pointer") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><path d="M36 42l10-10 4 4-10 10z" fill="none" stroke="${accent}" stroke-width="1.8"/><path d="M44 30l4-4 4 4-4 4z" fill="none" stroke="${accent}" stroke-width="1.6"/>`;
+  } else if (type === "modern-studio-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><path d="M36 42l10-10 4 4-10 10z" fill="none" stroke="${accent}" stroke-width="2"/><path d="M44 30l4-4 4 4-4 4z" fill="none" stroke="${accent}" stroke-width="1.8"/><path d="M30 52c6-2 10-6 12-12" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>`;
+  } else if (type === "modern-ui-pointer") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><rect x="36" y="40" width="16" height="8" rx="4" fill="none" stroke="${accent}" stroke-width="2"/><circle cx="42" cy="44" r="3" fill="none" stroke="${accent}" stroke-width="2"/>`;
+  } else if (type === "modern-ui-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><rect x="36" y="40" width="16" height="8" rx="4" fill="none" stroke="${accent}" stroke-width="2.2"/><circle cx="48" cy="44" r="3" fill="${accent}"/>`;
+  } else if (type === "modern-travel-pointer") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/><path d="M44 38c3 0 6 2 6 6 0 4-6 10-6 10s-6-6-6-10c0-4 3-6 6-6z" fill="none" stroke="${accent}" stroke-width="1.8"/><circle cx="44" cy="44" r="2.2" fill="${accent}"/>`;
+  } else if (type === "modern-travel-pointer-hover") {
+    shape = `<path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/><path d="M44 37c3 0 6 2 6 6 0 5-6 11-6 11s-6-6-6-11c0-4 3-6 6-6z" fill="none" stroke="${accent}" stroke-width="2"/><circle cx="44" cy="43" r="2.4" fill="${accent}"/><path d="M52 36l1.6 3.2 3.2 1.6-3.2 1.6-1.6 3.2-1.6-3.2-3.2-1.6 3.2-1.6z" fill="none" stroke="${accent}" stroke-width="1.6"/>`;
+  } else if (type === "neon-arrow") {
+    const glow = mixHex(fill, accent, 0.55);
+    shape = `
+      <path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${glow}" stroke-width="7" stroke-linejoin="round" opacity="0.35"/>
+      <path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="none" stroke="${fill}" stroke-width="2.8" stroke-linejoin="round"/>
+      <path d="M18 14l20 15" stroke="${accent}" stroke-width="2.4" stroke-linecap="round" opacity="0.6"/>
+    `;
+  } else if (type === "neon-arrow-3d") {
+    const glow = mixHex(fill, accent, 0.6);
+    const inner = mixHex(fill, "#ffffff", 0.35);
+    shape = `
+      <path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="${fill}" stroke="${glow}" stroke-width="7" stroke-linejoin="round" opacity="0.25"/>
+      <path d="M12 8l34 26-18 4 8 20-10 4-8-20-16 10z" fill="${inner}" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M16 12l24 18-10 2-6-4-10 6z" fill="${accent}" opacity="0.35"/>
+      <path d="M18 14l12 10" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.6"/>
+    `;
+  } else if (type === "neon-ring") {
+    const glow = mixHex(fill, accent, 0.6);
+    shape = `
+      <circle cx="32" cy="32" r="14" fill="none" stroke="${glow}" stroke-width="6" opacity="0.35"/>
+      <circle cx="32" cy="32" r="12" fill="none" stroke="${fill}" stroke-width="2.6"/>
+      <circle cx="32" cy="32" r="6" fill="none" stroke="${accent}" stroke-width="2"/>
+    `;
+  } else if (type === "neon-ring-dots") {
+    const glow = mixHex(fill, accent, 0.55);
+    const dots = Array.from({ length: 12 })
+      .map((_, i) => {
+        const angle = (Math.PI * 2 * i) / 12;
+        const x = 32 + Math.cos(angle) * 12;
+        const y = 32 + Math.sin(angle) * 12;
+        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(
+          1,
+        )}" r="2.4" fill="${accent}"/>`;
+      })
+      .join("");
+    shape = `
+      <circle cx="32" cy="32" r="15" fill="none" stroke="${glow}" stroke-width="6" opacity="0.28"/>
+      ${dots}
+      <circle cx="32" cy="32" r="6" fill="none" stroke="${fill}" stroke-width="2"/>
+    `;
+  } else if (type === "neon-hand") {
+    const glow = mixHex(fill, accent, 0.6);
+    shape = `
+      <path d="M24 16c0-3 2-5 5-5s5 2 5 5v10h3v-8c0-3 2-5 5-5s5 2 5 5v14c0 6-4 10-10 12l-6 2c-5 2-10-2-10-8V26h3z" fill="none" stroke="${glow}" stroke-width="6" stroke-linejoin="round" opacity="0.25"/>
+      <path d="M24 16c0-3 2-5 5-5s5 2 5 5v10h3v-8c0-3 2-5 5-5s5 2 5 5v14c0 6-4 10-10 12l-6 2c-5 2-10-2-10-8V26h3z" fill="none" stroke="${fill}" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M30 20v8M38 18v10" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>
+    `;
+  } else if (type === "neon-fist") {
+    const glow = mixHex(fill, accent, 0.55);
+    shape = `
+      <path d="M22 20c0-3 3-5 6-5h10c3 0 6 2 6 5v12c0 6-5 10-12 12l-4 1c-4 1-8-2-8-6V20z" fill="none" stroke="${glow}" stroke-width="6" opacity="0.25" stroke-linejoin="round"/>
+      <path d="M22 20c0-3 3-5 6-5h10c3 0 6 2 6 5v12c0 6-5 10-12 12l-4 1c-4 1-8-2-8-6V20z" fill="none" stroke="${fill}" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M24 26h20M24 30h20" stroke="${accent}" stroke-width="2" stroke-linecap="round"/>
+    `;
+  } else if (type === "emoji-smile") {
+    const outline = mixHex(fill, accent, 0.4);
+    shape = `
+      <circle cx="32" cy="32" r="18" fill="${fill}" stroke="${outline}" stroke-width="2"/>
+      <circle cx="26" cy="28" r="2.4" fill="${accent}"/>
+      <circle cx="38" cy="28" r="2.4" fill="${accent}"/>
+      <path d="M24 35c3 4 13 4 16 0l-2 4c-4 3-8 3-12 0z" fill="${accent}"/>
+    `;
+  } else if (type === "emoji-laugh") {
+    const outline = mixHex(fill, accent, 0.4);
+    shape = `
+      <circle cx="32" cy="32" r="18" fill="${fill}" stroke="${outline}" stroke-width="2"/>
+      <circle cx="26" cy="27" r="2.2" fill="${accent}"/>
+      <circle cx="38" cy="27" r="2.2" fill="${accent}"/>
+      <path d="M24 34c3 7 13 7 16 0l-2 5c-4 4-8 4-12 0z" fill="${accent}"/>
+    `;
+  } else if (type === "emoji-wink") {
+    const outline = mixHex(fill, accent, 0.4);
+    shape = `
+      <circle cx="32" cy="32" r="18" fill="${fill}" stroke="${outline}" stroke-width="2"/>
+      <circle cx="22.5" cy="33.5" r="2.6" fill="${accent}" opacity="0.22"/>
+      <circle cx="41.5" cy="33.5" r="2.6" fill="${accent}" opacity="0.22"/>
+      <path d="M24 35c3 4 13 4 16 0l-2 4c-4 3-8 3-12 0z" fill="${accent}"/>
+    `;
+  } else if (type === "emoji-heart-eyes") {
+    const outline = mixHex(fill, accent, 0.4);
+    shape = `
+      <circle cx="32" cy="32" r="18" fill="${fill}" stroke="${outline}" stroke-width="2"/>
+      <path d="M22 26c0-3.2 4.2-4.4 6.6-1.2 2.3-3.2 6.5-2 6.5 1.2-1.1 3.3-6.5 6.4-6.5 6.4S23.1 29.3 22 26z" fill="${accent}"/>
+      <path d="M32 26c0-3.2 4.2-4.4 6.6-1.2 2.3-3.2 6.5-2 6.5 1.2-1.1 3.3-6.5 6.4-6.5 6.4S33.1 29.3 32 26z" fill="${accent}"/>
+      <path d="M24 35c3 4 13 4 16 0l-2 4c-4 3-8 3-12 0z" fill="${accent}"/>
+    `;
   } else if (type === "bw-arrow-classic") {
     shape = `<g transform="scale(2.6666667)"><path d="M17.2607 12.4008C19.3774 11.2626 20.4357 10.6935 20.7035 10.0084C20.9359 9.41393 20.8705 8.74423 20.5276 8.20587C20.1324 7.58551 18.984 7.23176 16.6872 6.52425L8.00612 3.85014C6.06819 3.25318 5.09923 2.95471 4.45846 3.19669C3.90068 3.40733 3.46597 3.85584 3.27285 4.41993C3.051 5.06794 3.3796 6.02711 4.03681 7.94545L6.94793 16.4429C7.75632 18.8025 8.16052 19.9824 8.80519 20.3574C9.36428 20.6826 10.0461 20.7174 10.6354 20.4507C11.3149 20.1432 11.837 19.0106 12.8813 16.7454L13.6528 15.0719C13.819 14.7113 13.9021 14.531 14.0159 14.3736C14.1168 14.2338 14.2354 14.1078 14.3686 13.9984C14.5188 13.8752 14.6936 13.7812 15.0433 13.5932L17.2607 12.4008Z" fill="${fill}" stroke="${accent}" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
   } else if (type === "bw-arrow-outline") {

@@ -11,6 +11,10 @@
 {% assign default_accent = app.metafields.fourcore_cursor.default_accent_color.value | default: "#ffd166" %}
 {% assign hover_color = app.metafields.fourcore_cursor.hover_color.value | default: "#ff4d4d" %}
 {% assign hover_accent = app.metafields.fourcore_cursor.hover_accent_color.value | default: "#ffe29a" %}
+{% assign hotspot_x = app.metafields.fourcore_cursor.hotspot_x.value | default: 12 | plus: 0 %}
+{% assign hotspot_y = app.metafields.fourcore_cursor.hotspot_y.value | default: 6 | plus: 0 %}
+{% assign hover_hotspot_x = app.metafields.fourcore_cursor.hover_hotspot_x.value | default: hotspot_x | plus: 0 %}
+{% assign hover_hotspot_y = app.metafields.fourcore_cursor.hover_hotspot_y.value | default: hotspot_y | plus: 0 %}
 
 {% assign size_key = size_value | divided_by: 4 | round | times: 4 %}
 {% if size_key < 24 %}
@@ -33,6 +37,11 @@
 {% assign hover_color_param = hover_color | url_encode %}
 {% assign hover_accent_param = hover_accent | url_encode %}
 
+{% assign hotspot_x_px = hotspot_x | times: size_key | divided_by: 64 | round %}
+{% assign hotspot_y_px = hotspot_y | times: size_key | divided_by: 64 | round %}
+{% assign hover_hotspot_x_px = hover_hotspot_x | times: hover_size_key | divided_by: 64 | round %}
+{% assign hover_hotspot_y_px = hover_hotspot_y | times: hover_size_key | divided_by: 64 | round %}
+
 {% if default_value contains "http" %}
   {% assign default_url = default_value %}
 {% else %}
@@ -52,11 +61,11 @@
       }
 
       html, body, label {
-        cursor: url("{{ default_url }}") 0 0, auto !important;
+        cursor: url("{{ default_url }}") {{ hotspot_x_px }} {{ hotspot_y_px }}, auto !important;
       }
 
       a:hover, textarea:hover, input:hover, select:hover, button:hover, summary:hover, [role='button']:hover {
-        cursor: url("{{ hover_url }}") 0 0, auto !important;
+        cursor: url("{{ hover_url }}") {{ hover_hotspot_x_px }} {{ hover_hotspot_y_px }}, auto !important;
       }
 
       html::before,
@@ -91,7 +100,7 @@
 
 {% schema %}
 {
-  "name": "FourCore Cursor",
+  "name": "FourCore Custom Cursor",
   "target": "body",
   "settings": []
 }

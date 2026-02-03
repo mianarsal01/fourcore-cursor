@@ -23,7 +23,7 @@ export default function App() {
       <div className={styles.content}>
         <div className={styles.hero}>
           <div>
-            <p className={styles.kicker}>FourCore Cursor</p>
+            <p className={styles.kicker}>FourCore Custom Cursor</p>
             <h1 className={styles.heading}>
               Custom cursors that turn browsing into a branded moment.
             </h1>

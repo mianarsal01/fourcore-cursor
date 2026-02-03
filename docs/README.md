@@ -1,6 +1,6 @@
-# FourCore Cursor
+# FourCore Custom Cursor
 
-FourCore Cursor is a Shopify app that lets merchants apply lightweight, CSS-based custom cursors to their storefronts. It uses theme app embeds and native CSS cursors for minimal impact on page speed.
+FourCore Custom Cursor is a Shopify app that lets merchants apply lightweight, CSS-based custom cursors to their storefronts. It uses theme app embeds and native CSS cursors for minimal impact on page speed.
 
 ## Features
 
@@ -15,7 +15,7 @@ FourCore Cursor is a Shopify app that lets merchants apply lightweight, CSS-base
 
 1. Install the app from the Shopify App Store.
 2. In Online Store > Themes, open the theme editor.
-3. Enable the "FourCore Cursor" app embed.
+3. Enable the "FourCore Custom Cursor" app embed.
 4. Open the app to choose a cursor and sizes.
 5. Click "Save & Publish".
 

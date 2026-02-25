@@ -59,6 +59,10 @@
       * {
         cursor: inherit !important;
       }
+      *::before,
+      *::after {
+        cursor: inherit !important;
+      }
 
       html, body, label {
         cursor: url("{{ default_url }}") {{ hotspot_x_px }} {{ hotspot_y_px }}, auto !important;

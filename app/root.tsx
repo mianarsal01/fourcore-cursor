@@ -7,16 +7,18 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="preconnect" href="https://cdn.shopify.com/" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preload"
+          href="/fonts/manrope-latin.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin=""
+        />
         <link
           rel="icon"
           href="https://cdn.shopify.com/s/files/1/0727/4813/8650/files/image_c0ae595c-de22-47e8-8146-f8c10f88273c.png?v=1768923780"
         />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
-        />
+        <link rel="stylesheet" href="/fonts.css" />
         <Meta />
         <Links />
       </head>
